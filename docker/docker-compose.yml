@@ -26,9 +26,9 @@ services:
     container_name: db-host
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: instant
-      MYSQL_USER: dbuser
-      MYSQL_PASSWORD: docker
+      MYSQL_DATABASE: sports_location
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
       TZ: 'Asia/Tokyo'
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     volumes:
