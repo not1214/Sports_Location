@@ -1,4 +1,5 @@
-@extends('layout')
-@section('content')
+@extends('layouts/app')
 
+@section('content')
+<h1>TOP</h1>
 @endsection
