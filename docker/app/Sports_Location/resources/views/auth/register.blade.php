@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+                <h3 class="card-header text-center bg-light">{{ __('Register') }}</h3>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
@@ -85,9 +85,9 @@
                             <label for="gender" class="col-md-4 col-form-label text-md-end">{{ __('Gender') }}</label>
 
                             <div class="col-md-6 d-flex align-items-center">
-                                <input id="gender" type="radio" class="@error('gender') is-invalid @enderror" name="gender" value=0>男性　　
-                                <input id="gender" type="radio" class="@error('gender') is-invalid @enderror" name="gender" value=1>女性　　
-                                <input id="gender" type="radio" class="@error('gender') is-invalid @enderror" name="gender" value=2>その他　　
+                                <input id="gender" type="radio" class="@error('gender') is-invalid @enderror" name="gender" value="1">男性　　
+                                <input id="gender" type="radio" class="@error('gender') is-invalid @enderror" name="gender" value="2">女性　　
+                                <input id="gender" type="radio" class="@error('gender') is-invalid @enderror" name="gender" value="3">その他　　
                                 
                                 @error('gender')
                                     <span class="invalid-feedback" role="alert">

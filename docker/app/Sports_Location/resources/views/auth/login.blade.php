@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+            <h3 class="card-header text-center bg-light">{{ __('Login') }}</h3>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
@@ -51,7 +51,7 @@
                             </div>
                         </div>
 
-                        <div class="row mb-0">
+                        <div class="row mb-2">
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Login') }}
@@ -62,6 +62,7 @@
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif
+                                <p class="offset-3">会員登録は<a href="{{ route('register') }}">こちら</a></p>
                             </div>
                         </div>
                     </form>

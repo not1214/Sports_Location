@@ -1,4 +1,6 @@
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+<link rel="stylesheet" type="text/css" href="css/header_footer.css">
+
+<nav class="navbar navbar-expand-md navbar-dark shadow-sm" style="background-color: #26d0c9">
   <div class="container">
       <a class="navbar-brand" href="{{ url('/') }}">
           {{ config('app.name') }}
