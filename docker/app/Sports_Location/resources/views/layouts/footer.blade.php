@@ -1,5 +1,3 @@
-<link rel="stylesheet" type="text/css" href="css/header_footer.css">
-
 <div class="container">
     <a style="float:left; font-size:20px;" href="{{ url('/') }}">
         {{ config('app.name') }}
