@@ -85,9 +85,9 @@
                             <label for="gender" class="col-md-4 col-form-label text-md-end">{{ __('Gender') }}</label>
 
                             <div class="col-md-6 d-flex align-items-center">
-                                <input id="gender" type="radio" class="@error('gender') is-invalid @enderror" name="gender" value="1">男性　　
-                                <input id="gender" type="radio" class="@error('gender') is-invalid @enderror" name="gender" value="2">女性　　
-                                <input id="gender" type="radio" class="@error('gender') is-invalid @enderror" name="gender" value="3">その他　　
+                                <input id="gender" type="radio" class="@error('gender') is-invalid @enderror" name="gender" value="1" {{ old('gender', '1') == '1' ? 'checked' : '' }}>男性　　
+                                <input id="gender" type="radio" class="@error('gender') is-invalid @enderror" name="gender" value="2" {{ old('gender') == '2' ? 'checked' : '' }}>女性　　
+                                <input id="gender" type="radio" class="@error('gender') is-invalid @enderror" name="gender" value="3" {{ old('gender') == '3' ? 'checked' : '' }}>その他　　
                                 
                                 @error('gender')
                                     <span class="invalid-feedback" role="alert">
