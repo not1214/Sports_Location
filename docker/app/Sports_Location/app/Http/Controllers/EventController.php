@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Event;
+use App\Models\Area;
 
 class EventController extends Controller
 {
@@ -25,7 +26,9 @@ class EventController extends Controller
      */
     public function create()
     {
-        //
+        $event = new Event();
+        $areas = Area::all();
+        return view('event/create', compact('event', 'areas'));
     }
 
     /**

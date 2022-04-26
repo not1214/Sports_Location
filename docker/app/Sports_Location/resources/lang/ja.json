@@ -27,5 +27,9 @@
   "Home": "マイページ",
   "Logout": "ログアウト",
   "Dashboard": "お知らせ",
-  "You are logged in!":"ログインしました！"
+  "You are logged in!":"ログインしました！",
+
+  "Image":"画像",
+  "Title":"タイトル",
+  "Area":"エリア"
 }

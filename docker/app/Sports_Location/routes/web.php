@@ -44,4 +44,4 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
     Route::get('home', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.home');
 });
 
-Route::resource('events', 'EventController');
+Route::resource('events', 'App\Http\Controllers\EventController');
