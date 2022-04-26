@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-@include('event/form', ['target' => 'store'])
+@include('event.form', ['target' => 'store'])
 @endsection

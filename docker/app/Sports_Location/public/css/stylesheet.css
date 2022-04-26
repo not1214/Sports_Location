@@ -35,3 +35,7 @@ footer a {
 footer a:hover {
   color: inherit;
 }
+
+textarea {
+  height: 100px;
+}

@@ -31,5 +31,17 @@
 
   "Image":"画像",
   "Title":"タイトル",
-  "Area":"エリア"
+  "Area":"エリア",
+  "Location":"会場名",
+  "Date":"開催日",
+  "Start_time":"開始時刻",
+  "End_time":"終了時刻",
+  "Contents":"概要",
+  "Condition":"参加条件",
+  "Stuff":"持ち物",
+  "Attention":"注意事項",
+  "Number":"募集人数",
+  "Deadline":"締め切り日時",
+  "Confirm":"確認する",
+  "Status":"募集ステータス"
 }

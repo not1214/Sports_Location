@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,20 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('top');
-});
-
 Auth::routes();
 
 // User認証不要
 Route::get('/', function () {
-    return redirect('/home');
+    return view('top');
 });
 
 // Userログイン後
 Route::group(['middleware' => 'auth:user'], function () {
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/events', [App\Http\Controllers\EventController::class, 'index'])->name('index');
 });
 
 //Admin認証不要
