@@ -39,3 +39,9 @@ footer a:hover {
 textarea {
   height: 100px;
 }
+
+img {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+}

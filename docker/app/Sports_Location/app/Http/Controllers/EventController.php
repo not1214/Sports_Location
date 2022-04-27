@@ -56,7 +56,9 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->get('back')) {
+            return redirect('/events/create')->withInput();
+        }
     }
 
     /**
