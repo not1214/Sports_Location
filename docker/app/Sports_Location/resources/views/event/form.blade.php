@@ -1,15 +1,15 @@
 <div class="container">
-    
-    @if($target == 'store')
+
+    @if($target == 'confirm')
     <h3 class="text-center mb-3">イベントを作成</h3>
-    <form method="post" action="/events">
+    <form method="post" action="/events/create/confirm" enctype="multipart/form-data" name="form">
     @elseif($target == 'update')
     <h3 class="text-center mb-3">イベントを編集</h3>
-    <form method="post" action="/events/{{ $event->id }}">
+    <form method="post" action="/events/{{ $event->id }}" enctype="multipart/form-data" name="form">
         <input type="hidden" name="_method" value="put">
     @endif
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-        
+
         <div class="row mb-3">
             <label for="image" class="col-md-4 col-form-label text-md-end">{{ __('Image') }}</label>
 
@@ -33,7 +33,7 @@
                 <select id="area" class="form-select" name="area" required>
                     <option disabled style='display:none;' @if (empty($event->area_id)) selected @endif>選択してください</option>
                     @foreach($areas as $area)
-                        <option value="{{ $event->area_id }}" @if (isset($event->area_id) && ($event->area_id === $area->id)) selected @endif>{{ $area->name }}</option>
+                        <option value="{{ $area->id }}" @if (isset($event->area_id) && ($event->area_id === $area->id)) selected @endif>{{ $area->name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -119,7 +119,7 @@
             </div>
         </div>
 
-        @if($target == 'store')
+        @if($target == 'confirm')
             <input id="status" name="status" type="hidden" value="1">
         @elseif($target == 'update')
             <div class="row mb-3">
@@ -133,7 +133,7 @@
 
         <div class="row mb-2">
             <div class="col-md-8 offset-md-4">
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" name="confirm" class="btn btn-primary">
                     {{ __('Confirm') }}
                 </button>
             </div>

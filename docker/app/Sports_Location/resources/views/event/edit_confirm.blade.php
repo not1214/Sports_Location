@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-@include('event.form', ['target' => 'confirm'])
+@include('event.confirm', ['target' => 'edit_confirm'])
 @endsection

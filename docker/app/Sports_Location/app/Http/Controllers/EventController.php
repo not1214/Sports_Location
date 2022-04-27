@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Event;
 use App\Models\Area;
 
@@ -31,6 +32,22 @@ class EventController extends Controller
         return view('event/create', compact('event', 'areas'));
     }
 
+    public function confirm(Request $request)
+    {
+        $event = $request->except('image');
+        $event_image = $request->file('image');
+
+        $temp_path = $event_image->store('public/temp');
+        $read_temp_path = str_replace('public/', 'storage/', $temp_path);
+
+        $event['temp_path'] = $temp_path;
+        $event['read_temp_path'] = $read_temp_path;
+        $event['user'] = Auth::user()->username;
+        $request->session()->put('event', $event);
+        $area = Area::find($event['area']);
+
+        return view('event/create_confirm', compact('event', 'area'));
+    }
     /**
      * Store a newly created resource in storage.
      *
