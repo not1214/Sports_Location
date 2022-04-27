@@ -8,13 +8,14 @@
     <form method="post" action="/events/{{ $event->id }}" enctype="multipart/form-data" name="form">
         <input type="hidden" name="_method" value="put">
     @endif
+        @csrf
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
         <div class="row mb-3">
             <label for="image" class="col-md-4 col-form-label text-md-end">{{ __('Image') }}</label>
 
             <div class="col-md-6">
-                <input id="image" type="file" class="form-control" name="image" value="{{ $event->event_image }}">
+                <input id="image" type="file" class="form-control" name="image">
             </div>
         </div>
 
@@ -22,7 +23,7 @@
             <label for="title" class="col-md-4 col-form-label text-md-end">{{ __('Title') }}</label>
 
             <div class="col-md-6">
-                <input id="title" type="text" class="form-control" name="title" required value="{{ $event->title }}">
+                <input id="title" type="text" class="form-control" name="title" required value="{{ old('title') }}">
             </div>
         </div>
 
@@ -33,7 +34,7 @@
                 <select id="area" class="form-select" name="area" required>
                     <option disabled style='display:none;' @if (empty($event->area_id)) selected @endif>選択してください</option>
                     @foreach($areas as $area)
-                        <option value="{{ $area->id }}" @if (isset($event->area_id) && ($event->area_id === $area->id)) selected @endif>{{ $area->name }}</option>
+                        <option value="{{ $area->id }}" @if (old('area') == $area->id)) selected @endif>{{ $area->name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -43,7 +44,7 @@
             <label for="location" class="col-md-4 col-form-label text-md-end">{{ __('Location') }}</label>
 
             <div class="col-md-6">
-                <input id="location" type="text" class="form-control" name="location" required value="{{ $event->location }}">
+                <input id="location" type="text" class="form-control" name="location" required value="{{ old('location') }}">
             </div>
         </div>
 
@@ -51,7 +52,7 @@
             <label for="date" class="col-md-4 col-form-label text-md-end">{{ __('Date') }}</label>
 
             <div class="col-md-4">
-                <input id="date" type="date" class="form-control" name="date" required value="{{ $event->date }}">
+                <input id="date" type="date" class="form-control" name="date" required value="{{ old('date') }}">
             </div>
         </div>
 
@@ -59,7 +60,7 @@
             <label for="start_time" class="col-md-4 col-form-label text-md-end">{{ __('Start_time') }}</label>
 
             <div class="col-md-4">
-                <input id="start_time" type="time" class="form-control" name="start_time" required value="{{ $event->start_time }}">
+                <input id="start_time" type="time" class="form-control" name="start_time" required value="{{ old('start_time') }}">
             </div>
         </div>
 
@@ -67,7 +68,7 @@
             <label for="end_time" class="col-md-4 col-form-label text-md-end">{{ __('End_time') }}</label>
 
             <div class="col-md-4">
-                <input id="end_time" type="time" class="form-control" name="end_time" required value="{{ $event->end_time }}">
+                <input id="end_time" type="time" class="form-control" name="end_time" required value="{{ old('end_time') }}">
             </div>
         </div>
 
@@ -75,7 +76,7 @@
             <label for="contents" class="col-md-4 col-form-label text-md-end">{{ __('Contents') }}</label>
 
             <div class="col-md-6">
-                <textarea id="contents" class="form-control" name="contents" required value="{{ $event->contents }}"></textarea>
+                <textarea id="contents" class="form-control" name="contents" required>{{ old('contents') }}</textarea>
             </div>
         </div>
 
@@ -83,7 +84,7 @@
             <label for="condition" class="col-md-4 col-form-label text-md-end">{{ __('Condition') }}</label>
 
             <div class="col-md-6">
-                <textarea id="condition" class="form-control" name="condition" required value="{{ $event->condition }}"></textarea>
+                <textarea id="condition" class="form-control" name="condition" required>{{ old('condition') }}</textarea>
             </div>
         </div>
 
@@ -91,7 +92,7 @@
             <label for="stuff" class="col-md-4 col-form-label text-md-end">{{ __('Stuff') }}</label>
 
             <div class="col-md-6">
-                <textarea id="stuff" class="form-control" name="stuff" required value="{{ $event->stuff }}"></textarea>
+                <textarea id="stuff" class="form-control" name="stuff" required>{{ old('stuff') }}</textarea>
             </div>
         </div>
 
@@ -99,7 +100,7 @@
             <label for="attention" class="col-md-4 col-form-label text-md-end">{{ __('Attention') }}</label>
 
             <div class="col-md-6">
-                <textarea id="attention" class="form-control" name="attention" required value="{{ $event->attention }}"></textarea>
+                <textarea id="attention" class="form-control" name="attention" required>{{ old('attention') }}</textarea>
             </div>
         </div>
 
@@ -107,7 +108,7 @@
             <label for="number" class="col-md-4 col-form-label text-md-end">{{ __('Number') }}</label>
 
             <div class="col-md-4">
-                <input id="number" type="number" class="form-control" name="number" required min="1" value="{{ $event->number }}">
+                <input id="number" type="number" class="form-control" name="number" required min="1" value="{{ old('number') }}">
             </div>
         </div>
 
@@ -115,7 +116,7 @@
             <label for="deadline" class="col-md-4 col-form-label text-md-end">{{ __('Deadline') }}</label>
 
             <div class="col-md-4">
-                <input id="deadline" type="datetime-local" class="form-control" name="deadline" required value="{{ $event->deadline }}">
+                <input id="deadline" type="datetime-local" class="form-control" name="deadline" required value="{{ old('deadline') }}">
             </div>
         </div>
 
