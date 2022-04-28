@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Carbon;
 use App\Models\Event;
 use App\Models\Area;
+use App\Models\User;
 
 class EventController extends Controller
 {
@@ -59,6 +62,39 @@ class EventController extends Controller
         if ($request->get('back')) {
             return redirect('/events/create')->withInput();
         }
+
+        $data = $request->session()->get('event');
+        $temp_path = $data['temp_path'];
+        $read_temp_path = $data['read_temp_path'];
+
+        $filename = str_replace('public/temp/', '', $temp_path);
+        $storage_path = 'public/event/'.$filename;
+
+        $request->session()->forget('event');
+
+        Storage::move($temp_path, $storage_path);
+
+        $read_path = str_replace('public/', 'storage/', $storage_path);
+
+        $event = new Event;
+        $event->title = $data['title'];
+        $event->event_image = $read_path;
+        $event->user_id = User::whereUsername($data['user'])->first()->id;
+        $event->area_id = $data['area'];
+        $event->location = $data['location'];
+        $event->date = $data['date'];
+        $event->start_time = $data['start_time'];
+        $event->end_time = $data['end_time'];
+        $event->contents = $data['contents'];
+        $event->condition = $data['condition'];
+        $event->deadline = strtotime($data['deadline']);
+        $event->number = $data['number'];
+        $event->stuff = $data['stuff'];
+        $event->attention = $data['attention'];
+        $event->status = $data['status'];
+
+        $event->save();
+        return redirect()->route('events.show', [$event->id]);
     }
 
     /**
@@ -82,7 +118,8 @@ class EventController extends Controller
     public function edit($id)
     {
         $event = Event::findOrFail($id);
-        return view('event/edit', compact('event'));
+        $areas = Area::all();
+        return view('event/edit', compact('event', 'areas'));
     }
 
     /**
@@ -94,7 +131,8 @@ class EventController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $event = Event::findOrFail($id);
+        
     }
 
     /**

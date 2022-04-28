@@ -43,3 +43,4 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
 
 Route::resource('events', 'App\Http\Controllers\EventController');
 Route::post('events/create/confirm', [\App\Http\Controllers\EventController::class, 'confirm'])->name('events.create_confirm');
+Route::post('events/{event}/edit/confirm', [\App\Http\Controllers\EventController::class, 'confirm'])->name('events.edit_confirm');
