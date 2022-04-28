@@ -4,7 +4,7 @@
 
 <div class="container">
     
-    @if($event['status'] == '0')
+    @if($event->status == '0')
         <div class="row mb-3 text-center text-danger">
             募集は終了しました。
         </div>
@@ -12,17 +12,21 @@
 
     <div class="row my-5">
         <div class="col-md-4 offset-md-1 text-center">
+            @if(!empty($event->event_image))
             <img src="{{ asset($event->event_image) }}" class="event_image">
+            @else
+            <img src="{{ asset(images/no-image.png) }}" class="event_image">
+            @endif
         </div>
         <div class="col-md-6 my-auto">
             <div class="mb-3">開催者：{{ $event->user->username }}</div>
             <h3 class="mb-3">{{ $event->title }}</h3>
             @if(Auth::id() == $event->user_id)
                 <a href="#" class="btn btn-success col-md-3">予約申請一覧</a>
-                <a href="#" class="btn btn-primary col-md-3 ms-2">編集する</a>
+                <a href="/events/{{ $event->id }}/edit" class="btn btn-primary col-md-3 ms-2">編集する</a>
                 <a href="#" class="btn btn-danger col-md-3 ms-2">削除する</a>
             @else
-                <a href="#" class="btn btn-primary">応募する</a>
+                <a href="#" class="btn btn-primary" @if($event->status == '0') disabled @endif>応募する</a>
             @endif
         </div>
     </div>

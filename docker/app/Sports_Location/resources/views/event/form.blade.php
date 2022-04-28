@@ -5,8 +5,7 @@
     <form method="post" action="/events/create/confirm" enctype="multipart/form-data" name="form">
     @elseif($target == 'update')
     <h3 class="text-center mb-3">イベントを編集</h3>
-    <form method="post" action="/events/{{ $event->id }}" enctype="multipart/form-data" name="form">
-        <input type="hidden" name="_method" value="put">
+    <form method="post" action="/events/{{ $event->id }}/edit/confirm" enctype="multipart/form-data" name="form">
     @endif
         @csrf
         <input type="hidden" name="_token" value="{{ csrf_token() }}">

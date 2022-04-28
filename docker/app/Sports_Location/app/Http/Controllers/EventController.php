@@ -35,16 +35,17 @@ class EventController extends Controller
         return view('event/create', compact('event', 'areas'));
     }
 
-    public function confirm(Request $request)
+    public function createConfirm(Request $request)
     {
         $event = $request->except('image');
-        $event_image = $request->file('image');
 
-        $temp_path = $event_image->store('public/temp');
-        $read_temp_path = str_replace('public/', 'storage/', $temp_path);
+        if ($request->hasFile('image')) {
+            $temp_path = $request->file('image')->store('public/temp');
+            $read_temp_path = str_replace('public/', 'storage/', $temp_path);
+            $event['temp_path'] = $temp_path;
+            $event['read_temp_path'] = $read_temp_path;
+        }
 
-        $event['temp_path'] = $temp_path;
-        $event['read_temp_path'] = $read_temp_path;
         $event['user'] = Auth::user()->username;
         $request->session()->put('event', $event);
         $area = Area::find($event['area']);
@@ -63,22 +64,21 @@ class EventController extends Controller
             return redirect('/events/create')->withInput();
         }
 
+        $event = new Event;
         $data = $request->session()->get('event');
-        $temp_path = $data['temp_path'];
-        $read_temp_path = $data['read_temp_path'];
+        if ($request->hasFile('image')) {
+            $temp_path = $data['temp_path'];
+            $filename = str_replace('public/temp/', '', $temp_path);
+            $storage_path = 'public/event/'.$filename;
 
-        $filename = str_replace('public/temp/', '', $temp_path);
-        $storage_path = 'public/event/'.$filename;
+            Storage::move($temp_path, $storage_path);
 
+            $read_path = str_replace('public/', 'storage/', $storage_path);
+            $event->event_image = $read_path;
+        }
         $request->session()->forget('event');
 
-        Storage::move($temp_path, $storage_path);
-
-        $read_path = str_replace('public/', 'storage/', $storage_path);
-
-        $event = new Event;
         $event->title = $data['title'];
-        $event->event_image = $read_path;
         $event->user_id = User::whereUsername($data['user'])->first()->id;
         $event->area_id = $data['area'];
         $event->location = $data['location'];
@@ -122,6 +122,24 @@ class EventController extends Controller
         return view('event/edit', compact('event', 'areas'));
     }
 
+    public function editConfirm(Request $request, $id)
+    {
+        $event = $request->except('image');
+
+        if ($request->hasFile('image')) {
+            $temp_path = $request->file('image')->store('public/temp');
+            $read_temp_path = str_replace('public/', 'storage/', $temp_path);
+            $event['temp_path'] = $temp_path;
+            $event['read_temp_path'] = $read_temp_path;
+        }
+
+        $event['user'] = Auth::user()->username;
+        $request->session()->put('event', $event);
+        $area = Area::find($event['area']);
+
+        return view('event/edit_confirm', compact('event', 'area', 'id'));
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -132,7 +150,39 @@ class EventController extends Controller
     public function update(Request $request, $id)
     {
         $event = Event::findOrFail($id);
-        
+        $data = $request->session()->get('event');
+
+        if ($request->hasFile('image')) {
+            $temp_path = $data['temp_path'];
+
+            $filename = str_replace('public/temp/', '', $temp_path);
+            $storage_path = 'public/event/'.$filename;
+
+            $request->session()->forget('event');
+
+            Storage::move($temp_path, $storage_path);
+
+            $read_path = str_replace('public/', 'storage/', $storage_path);
+            $event->event_image = $read_path;
+        }
+
+        $event->title = $request->title;
+        $event->user_id = User::whereUsername($data['user'])->first()->id;
+        $event->area_id = $data['area'];
+        $event->location = $data['location'];
+        $event->date = $data['date'];
+        $event->start_time = $data['start_time'];
+        $event->end_time = $data['end_time'];
+        $event->contents = $data['contents'];
+        $event->condition = $data['condition'];
+        $event->deadline = $data['deadline'];
+        $event->number = $data['number'];
+        $event->stuff = $data['stuff'];
+        $event->attention = $data['attention'];
+        $event->status = $data['status'];
+
+        $event->save();
+        return redirect()->route('events.show', [$event->id]);
     }
 
     /**

@@ -4,7 +4,8 @@
     @if($target == 'create_confirm')
     <form method="post" action="/events">
     @elseif($target == 'edit_confirm')
-    <form method="post" action="/events/{{ $event['id'] }}">
+    <form method="post" action="/events/{{ $id }}">
+    @method('patch')
     @endif
         @csrf
         @if($event['status'] == '0')
@@ -15,9 +16,13 @@
 
         <div class="row my-5">
             <div class="col-md-4 offset-md-1 text-center">
+                @if(isset($event['read_temp_path']))
                 <img src="{{ asset($event['read_temp_path']) }}" class="event_image">
+                <input name="image" value="{{ $event['read_temp_path'] }}" type="hidden">
+                @else
+                <img src="{{ asset('images/no-image.png') }}" class="event_image">
+                @endif
             </div>
-            <input name="image" value="{{ $event['read_temp_path'] }}" type="hidden">
             <div class="col-md-6 my-auto">
                 <div>開催者：{{ $event['user'] }}</div>
                 <h3>{{ $event['title'] }}</h3>
