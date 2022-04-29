@@ -37,20 +37,20 @@ class EventController extends Controller
 
     public function createConfirm(Request $request)
     {
-        $event = $request->except('image');
+        $data = $request->except('image');
 
         if ($request->hasFile('image')) {
             $temp_path = $request->file('image')->store('public/temp');
             $read_temp_path = str_replace('public/', 'storage/', $temp_path);
-            $event['temp_path'] = $temp_path;
-            $event['read_temp_path'] = $read_temp_path;
+            $data['temp_path'] = $temp_path;
+            $data['read_temp_path'] = $read_temp_path;
         }
 
-        $event['user'] = Auth::user()->username;
-        $request->session()->put('event', $event);
-        $area = Area::find($event['area']);
+        $data['user'] = Auth::user()->username;
+        $request->session()->put('data', $data);
+        $area = Area::find($data['area']);
 
-        return view('event/create_confirm', compact('event', 'area'));
+        return view('event/create_confirm', compact('data', 'area'));
     }
     /**
      * Store a newly created resource in storage.
@@ -65,8 +65,8 @@ class EventController extends Controller
         }
 
         $event = new Event;
-        $data = $request->session()->get('event');
-        if ($request->hasFile('image')) {
+        $data = $request->session()->get('data');
+        if (!empty($request->image)) {
             $temp_path = $data['temp_path'];
             $filename = str_replace('public/temp/', '', $temp_path);
             $storage_path = 'public/event/'.$filename;
@@ -76,7 +76,7 @@ class EventController extends Controller
             $read_path = str_replace('public/', 'storage/', $storage_path);
             $event->event_image = $read_path;
         }
-        $request->session()->forget('event');
+        $request->session()->forget('data');
 
         $event->title = $data['title'];
         $event->user_id = User::whereUsername($data['user'])->first()->id;
@@ -87,7 +87,7 @@ class EventController extends Controller
         $event->end_time = $data['end_time'];
         $event->contents = $data['contents'];
         $event->condition = $data['condition'];
-        $event->deadline = strtotime($data['deadline']);
+        $event->deadline = $data['deadline'];
         $event->number = $data['number'];
         $event->stuff = $data['stuff'];
         $event->attention = $data['attention'];
@@ -122,22 +122,28 @@ class EventController extends Controller
         return view('event/edit', compact('event', 'areas'));
     }
 
-    public function editConfirm(Request $request, $id)
+    public function editConfirm(Request $request, Event $event)
     {
-        $event = $request->except('image');
+        if ($request->get('back')) {
+            return redirect('/events/{{ $event->id }}/edit')->withInput();
+        }
+
+        $data = $request->except('image');
 
         if ($request->hasFile('image')) {
             $temp_path = $request->file('image')->store('public/temp');
             $read_temp_path = str_replace('public/', 'storage/', $temp_path);
-            $event['temp_path'] = $temp_path;
-            $event['read_temp_path'] = $read_temp_path;
+            $data['temp_path'] = $temp_path;
+            $data['read_temp_path'] = $read_temp_path;
+        } else {
+            $data['read_temp_path'] = $event->event_image;
         }
 
-        $event['user'] = Auth::user()->username;
-        $request->session()->put('event', $event);
-        $area = Area::find($event['area']);
+        $data['user'] = Auth::user()->username;
+        $request->session()->put('data', $data);
+        $area = Area::find($data['area']);
 
-        return view('event/edit_confirm', compact('event', 'area', 'id'));
+        return view('event/edit_confirm', compact('data', 'area', 'event'));
     }
 
     /**
@@ -150,15 +156,16 @@ class EventController extends Controller
     public function update(Request $request, $id)
     {
         $event = Event::findOrFail($id);
-        $data = $request->session()->get('event');
+        $data = $request->session()->get('data');
 
-        if ($request->hasFile('image')) {
+        if (!empty($request->image)) {
             $temp_path = $data['temp_path'];
-
             $filename = str_replace('public/temp/', '', $temp_path);
             $storage_path = 'public/event/'.$filename;
 
-            $request->session()->forget('event');
+            Storage::delete($event->event_image);
+
+            $request->session()->forget('data');
 
             Storage::move($temp_path, $storage_path);
 

@@ -4,11 +4,11 @@
     @if($target == 'create_confirm')
     <form method="post" action="/events">
     @elseif($target == 'edit_confirm')
-    <form method="post" action="/events/{{ $id }}">
+    <form method="post" action="/events/{{ $event->id }}">
     @method('patch')
     @endif
         @csrf
-        @if($event['status'] == '0')
+        @if($data['status'] == '0')
             <div class="row mb-3 text-center text-danger">
                 募集は終了しました。
             </div>
@@ -16,18 +16,18 @@
 
         <div class="row my-5">
             <div class="col-md-4 offset-md-1 text-center">
-                @if(isset($event['read_temp_path']))
-                <img src="{{ asset($event['read_temp_path']) }}" class="event_image">
-                <input name="image" value="{{ $event['read_temp_path'] }}" type="hidden">
+                @if(isset($data['read_temp_path']))
+                <img src="{{ asset($data['read_temp_path']) }}" class="event_image">
+                <input name="image" value="{{ $data['read_temp_path'] }}" type="hidden">
                 @else
                 <img src="{{ asset('images/no-image.png') }}" class="event_image">
                 @endif
             </div>
             <div class="col-md-6 my-auto">
-                <div>開催者：{{ $event['user'] }}</div>
-                <h3>{{ $event['title'] }}</h3>
+                <div>開催者：{{ $data['user'] }}</div>
+                <h3>{{ $data['title'] }}</h3>
             </div>
-            <input name="title" value="{{ $event['title'] }}" type="hidden">
+            <input name="title" value="{{ $data['title'] }}" type="hidden">
         </div>
 
         <div class="row py-3 mb-3 border-top border-dark">
@@ -43,90 +43,90 @@
             <label for="location" class="col-md-4 text-md-end">{{ __('Location') }}</label>
 
             <div class="col-md-6 offset-md-1">
-                <p>{{ $event['location'] }}</p>
+                <p>{{ $data['location'] }}</p>
             </div>
-            <input name="location" value="{{ $event['location'] }}" type="hidden">
+            <input name="location" value="{{ $data['location'] }}" type="hidden">
         </div>
 
         <div class="row mb-3">
             <label for="date" class="col-md-4 text-md-end">{{ __('Date') }}</label>
 
             <div class="col-md-4 offset-md-1">
-                <p>{{ $event['date'] }}</p>
+                <p>{{ $data['date'] }}</p>
             </div>
-            <input name="date" value="{{ $event['date'] }}" type="hidden">
+            <input name="date" value="{{ $data['date'] }}" type="hidden">
         </div>
 
         <div class="row mb-3">
             <label for="start_time" class="col-md-4 text-md-end">{{ __('Start_time') }}</label>
 
             <div class="col-md-4 offset-md-1">
-                <p>{{ $event['start_time'] }}</p>
+                <p>{{ $data['start_time'] }}</p>
             </div>
-            <input name="start_time" value="{{ $event['start_time'] }}" type="hidden">
+            <input name="start_time" value="{{ $data['start_time'] }}" type="hidden">
         </div>
 
         <div class="row mb-3">
             <label for="end_time" class="col-md-4 text-md-end">{{ __('End_time') }}</label>
 
             <div class="col-md-4 offset-md-1">
-                <p>{{ $event['end_time'] }}</p>
+                <p>{{ $data['end_time'] }}</p>
             </div>
-            <input name="end_time" value="{{ $event['end_time'] }}" type="hidden">
+            <input name="end_time" value="{{ $data['end_time'] }}" type="hidden">
         </div>
 
         <div class="row mb-3">
             <label for="contents" class="col-md-4 text-md-end">{{ __('Contents') }}</label>
 
             <div class="col-md-6 offset-md-1">
-                <p>{{ $event['contents'] }}</p>
+                <p>{{ $data['contents'] }}</p>
             </div>
-            <input name="contents" value="{{ $event['contents'] }}" type="hidden">
+            <input name="contents" value="{{ $data['contents'] }}" type="hidden">
         </div>
 
         <div class="row mb-3">
             <label for="condition" class="col-md-4 text-md-end">{{ __('Condition') }}</label>
 
             <div class="col-md-6 offset-md-1">
-                <p>{{ $event['condition'] }}</p>
+                <p>{{ $data['condition'] }}</p>
             </div>
-            <input name="condition" value="{{ $event['condition'] }}" type="hidden">
+            <input name="condition" value="{{ $data['condition'] }}" type="hidden">
         </div>
 
         <div class="row mb-3">
             <label for="stuff" class="col-md-4 text-md-end">{{ __('Stuff') }}</label>
 
             <div class="col-md-6 offset-md-1">
-                <p>{{ $event['stuff'] }}</p>
+                <p>{{ $data['stuff'] }}</p>
             </div>
-            <input name="stuff" value="{{ $event['stuff'] }}" type="hidden">
+            <input name="stuff" value="{{ $data['stuff'] }}" type="hidden">
         </div>
 
         <div class="row mb-3">
             <label for="attention" class="col-md-4 text-md-end">{{ __('Attention') }}</label>
 
             <div class="col-md-6 offset-md-1">
-                <p>{{ $event['attention'] }}</p>
+                <p>{{ $data['attention'] }}</p>
             </div>
-            <input name="attention" value="{{ $event['attention'] }}" type="hidden">
+            <input name="attention" value="{{ $data['attention'] }}" type="hidden">
         </div>
 
         <div class="row mb-3">
             <label for="number" class="col-md-4 text-md-end">{{ __('Number') }}</label>
 
             <div class="col-md-4 offset-md-1">
-                <p>{{ $event['number'] }}名</p>
+                <p>{{ $data['number'] }}名</p>
             </div>
-            <input name="number" value="{{ $event['number'] }}" type="hidden">
+            <input name="number" value="{{ $data['number'] }}" type="hidden">
         </div>
 
         <div class="row mb-4 border-bottom border-dark">
             <label for="deadline" class="col-md-4 text-md-end">{{ __('Deadline') }}</label>
 
             <div class="col-md-4 offset-md-1">
-                <p>{{ $event['deadline'] }}</p>
+                <p>{{ $data['deadline'] }}</p>
             </div>
-            <input name="deadline" value="{{ $event['deadline'] }}" type="hidden">
+            <input name="deadline" value="{{ $data['deadline'] }}" type="hidden">
         </div>
 
         <div class="row mb-2">

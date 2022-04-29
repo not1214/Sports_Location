@@ -15,7 +15,7 @@
             @if(!empty($event->event_image))
             <img src="{{ asset($event->event_image) }}" class="event_image">
             @else
-            <img src="{{ asset(images/no-image.png) }}" class="event_image">
+            <img src="{{ asset('images/no-image.png') }}" class="event_image">
             @endif
         </div>
         <div class="col-md-6 my-auto">
