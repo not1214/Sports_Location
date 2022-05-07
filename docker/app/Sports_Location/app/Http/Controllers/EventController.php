@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Carbon;
 use App\Models\Event;
 use App\Models\Area;
+use App\Models\Genre;
 use App\Models\User;
 
 class EventController extends Controller
@@ -20,7 +21,8 @@ class EventController extends Controller
     public function index()
     {
         $events = Event::all();
-        return view('event/index', compact('events'));
+        $genres = Genre::all();
+        return view('event/index', compact('events', 'genres'));
     }
 
     /**
@@ -32,7 +34,8 @@ class EventController extends Controller
     {
         $event = new Event();
         $areas = Area::all();
-        return view('event/create', compact('event', 'areas'));
+        $genres = Genre::all();
+        return view('event/create', compact('event', 'areas', 'genres'));
     }
 
     public function createConfirm(Request $request)
@@ -49,8 +52,9 @@ class EventController extends Controller
         $data['user'] = Auth::user()->username;
         $request->session()->put('data', $data);
         $area = Area::find($data['area']);
+        $genre = Genre::find($data['genre']);
 
-        return view('event/create_confirm', compact('data', 'area'));
+        return view('event/create_confirm', compact('data', 'area', 'genre'));
     }
     /**
      * Store a newly created resource in storage.
@@ -79,8 +83,9 @@ class EventController extends Controller
         $request->session()->forget('data');
 
         $event->title = $data['title'];
-        $event->user_id = User::whereUsername($data['user'])->first()->id;
+        $event->user_id = Auth::user()->id;
         $event->area_id = $data['area'];
+        $event->genre_id = $data['genre'];
         $event->location = $data['location'];
         $event->date = $data['date'];
         $event->start_time = $data['start_time'];
@@ -119,15 +124,12 @@ class EventController extends Controller
     {
         $event = Event::findOrFail($id);
         $areas = Area::all();
-        return view('event/edit', compact('event', 'areas'));
+        $genres = Genre::all();
+        return view('event/edit', compact('event', 'areas', 'genres'));
     }
 
     public function editConfirm(Request $request, Event $event)
     {
-        if ($request->get('back')) {
-            return redirect('/events/{{ $event->id }}/edit')->withInput();
-        }
-
         $data = $request->except('image');
 
         if ($request->hasFile('image')) {
@@ -142,8 +144,9 @@ class EventController extends Controller
         $data['user'] = Auth::user()->username;
         $request->session()->put('data', $data);
         $area = Area::find($data['area']);
+        $genre = Genre::find($data['genre']);
 
-        return view('event/edit_confirm', compact('data', 'area', 'event'));
+        return view('event/edit_confirm', compact('data', 'area', 'genre', 'event'));
     }
 
     /**
@@ -155,6 +158,10 @@ class EventController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if ($request->get('back')) {
+            return redirect()->route('events.edit', ['event' => $id])->withInput();
+        }
+
         $event = Event::findOrFail($id);
         $data = $request->session()->get('data');
 
@@ -176,6 +183,7 @@ class EventController extends Controller
         $event->title = $request->title;
         $event->user_id = User::whereUsername($data['user'])->first()->id;
         $event->area_id = $data['area'];
+        $event->genre_id = $data['genre'];
         $event->location = $data['location'];
         $event->date = $data['date'];
         $event->start_time = $data['start_time'];

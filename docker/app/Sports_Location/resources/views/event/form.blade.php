@@ -27,6 +27,19 @@
         </div>
 
         <div class="row mb-3">
+            <label for="genre" class="col-md-4 col-form-label text-md-end">{{ __('Genre') }}</label>
+
+            <div class="col-md-4">
+                <select id="genre" class="form-select" name="genre" required>
+                    <option disabled style='display:none;' @if (empty($event->genre_id)) selected @endif>選択してください</option>
+                    @foreach($genres as $genre)
+                        <option value="{{ $genre->id }}" @if (old('genre', $event->genre_id) == $genre->id)) selected @endif>{{ $genre->genre_name }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+
+        <div class="row mb-3">
             <label for="area" class="col-md-4 col-form-label text-md-end">{{ __('Area') }}</label>
 
             <div class="col-md-4">

@@ -32,6 +32,14 @@
     </div>
 
     <div class="row py-3 mb-3 border-top border-dark">
+        <label for="genre" class="col-md-4 text-md-end">{{ __('Genre') }}</label>
+
+        <div class="col-md-6 offset-md-1">
+            {{ $event->genre->genre_name }}
+        </div>
+    </div>
+
+    <div class="row pb-3 mb-3">
         <label for="area" class="col-md-4 text-md-end">{{ __('Area') }}</label>
 
         <div class="col-md-6 offset-md-1">
@@ -51,7 +59,7 @@
         <label for="date" class="col-md-4 text-md-end">{{ __('Date') }}</label>
 
         <div class="col-md-4 offset-md-1">
-            <p>{{ $event->date }}</p>
+            <p>{{ $event->formatted_date }}</p>
         </div>
     </div>
 
@@ -59,7 +67,7 @@
         <label for="start_time" class="col-md-4 text-md-end">{{ __('Start_time') }}</label>
 
         <div class="col-md-4 offset-md-1">
-            <p>{{ $event->start_time }}</p>
+            <p>{{ $event->formatted_start_time }}</p>
         </div>
     </div>
 
@@ -67,7 +75,7 @@
         <label for="end_time" class="col-md-4 text-md-end">{{ __('End_time') }}</label>
 
         <div class="col-md-4 offset-md-1">
-            <p>{{ $event->end_time }}</p>
+            <p>{{ $event->formatted_end_time }}</p>
         </div>
     </div>
 
@@ -75,7 +83,7 @@
         <label for="contents" class="col-md-4 text-md-end">{{ __('Contents') }}</label>
 
         <div class="col-md-6 offset-md-1">
-            <p>{{ $event->contents }}</p>
+            <p>{!! nl2br(e($event->contents)) !!}</p>
         </div>
     </div>
 
@@ -83,7 +91,7 @@
         <label for="condition" class="col-md-4 text-md-end">{{ __('Condition') }}</label>
 
         <div class="col-md-6 offset-md-1">
-            <p>{{ $event->condition }}</p>
+            <p>{!! nl2br(e($event->condition)) !!}</p>
         </div>
     </div>
 
@@ -91,7 +99,7 @@
         <label for="stuff" class="col-md-4 text-md-end">{{ __('Stuff') }}</label>
 
         <div class="col-md-6 offset-md-1">
-            <p>{{ $event->stuff }}</p>
+            <p>{!! nl2br(e($event->stuff)) !!}</p>
         </div>
     </div>
 
@@ -99,7 +107,7 @@
         <label for="attention" class="col-md-4 text-md-end">{{ __('Attention') }}</label>
 
         <div class="col-md-6 offset-md-1">
-            <p>{{ $event->attention }}</p>
+            <p>{!! nl2br(e($event->attention)) !!}</p>
         </div>
     </div>
 
@@ -115,7 +123,7 @@
         <label for="deadline" class="col-md-4 text-md-end">{{ __('Deadline') }}</label>
 
         <div class="col-md-4 offset-md-1">
-            <p>{{ $event->deadline }}</p>
+            <p>{{ $event->formatted_deadline }}</p>
         </div>
     </div>
 

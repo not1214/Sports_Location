@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Genre extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'genre_name'
+    ];
+
+    public function events()
+    {
+        $this->hasMany(Event::class, 'genre_id', 'id');
+    }
 }

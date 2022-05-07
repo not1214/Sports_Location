@@ -18,6 +18,8 @@ class CreateEventsTable extends Migration
             $table->string('title');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('genre_id');
+            $table->foreign('genre_id')->references('id')->on('genres');
             $table->unsignedBigInteger('area_id');
             $table->foreign('area_id')->references('id')->on('areas');
             $table->string('event_image')->nullable();

@@ -21,9 +21,13 @@ Route::get('/', function () {
     return view('top');
 });
 
+Route::get('events', 'App\Http\Controllers\EventController@index')->name('events.index');
+
 // Userログイン後
-Route::group(['middleware' => 'auth:user'], function () {
-    Route::get('/events', [App\Http\Controllers\EventController::class, 'index'])->name('index');
+Route::group(['middleware' => ['auth']], function () {
+    Route::resource('events', 'App\Http\Controllers\EventController', ['except' => ['index']]);
+    Route::post('events/create/confirm', [\App\Http\Controllers\EventController::class, 'createConfirm'])->name('events.create_confirm');
+    Route::post('events/{event}/edit/confirm', [\App\Http\Controllers\EventController::class, 'editConfirm'])->name('events.edit_confirm');
 });
 
 //Admin認証不要
@@ -40,7 +44,3 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
     Route::post('logout', [App\Http\Controllers\Admin\LoginController::class, 'logout'])->name('admin.logout');
     Route::get('home', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.home');
 });
-
-Route::resource('events', 'App\Http\Controllers\EventController');
-Route::post('events/create/confirm', [\App\Http\Controllers\EventController::class, 'createConfirm'])->name('events.create_confirm');
-Route::post('events/{event}/edit/confirm', [\App\Http\Controllers\EventController::class, 'editConfirm'])->name('events.edit_confirm');

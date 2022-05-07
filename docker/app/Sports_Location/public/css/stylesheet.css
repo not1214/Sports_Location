@@ -40,7 +40,7 @@ textarea {
   height: 100px;
 }
 
-img {
+.event_image {
   width: 180px;
   height: 180px;
   border-radius: 50%;

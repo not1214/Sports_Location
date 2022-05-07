@@ -24,13 +24,22 @@
                 @endif
             </div>
             <div class="col-md-6 my-auto">
-                <div>開催者：{{ $data['user'] }}</div>
-                <h3>{{ $data['title'] }}</h3>
+                <div class="mb-3">開催者：{{ $data['user'] }}</div>
+                <h3 class="mb-3">{{ $data['title'] }}</h3>
             </div>
             <input name="title" value="{{ $data['title'] }}" type="hidden">
         </div>
 
         <div class="row py-3 mb-3 border-top border-dark">
+            <label for="genre" class="col-md-4 text-md-end">{{ __('Genre') }}</label>
+
+            <div class="col-md-6 offset-md-1">
+               {{ $genre->genre_name }}
+            </div>
+            <input name="genre" value="{{ $genre->id }}" type="hidden">
+        </div>
+        
+        <div class="row pb-3 mb-3">
             <label for="area" class="col-md-4 text-md-end">{{ __('Area') }}</label>
 
             <div class="col-md-6 offset-md-1">
@@ -79,7 +88,7 @@
             <label for="contents" class="col-md-4 text-md-end">{{ __('Contents') }}</label>
 
             <div class="col-md-6 offset-md-1">
-                <p>{{ $data['contents'] }}</p>
+                <p>{!! nl2br(e($data['contents'])) !!}</p>
             </div>
             <input name="contents" value="{{ $data['contents'] }}" type="hidden">
         </div>
@@ -88,7 +97,7 @@
             <label for="condition" class="col-md-4 text-md-end">{{ __('Condition') }}</label>
 
             <div class="col-md-6 offset-md-1">
-                <p>{{ $data['condition'] }}</p>
+                <p>{!! nl2br(e($data['condition'])) !!}</p>
             </div>
             <input name="condition" value="{{ $data['condition'] }}" type="hidden">
         </div>
@@ -97,7 +106,7 @@
             <label for="stuff" class="col-md-4 text-md-end">{{ __('Stuff') }}</label>
 
             <div class="col-md-6 offset-md-1">
-                <p>{{ $data['stuff'] }}</p>
+                <p>{!! nl2br(e($data['stuff'])) !!}</p>
             </div>
             <input name="stuff" value="{{ $data['stuff'] }}" type="hidden">
         </div>
@@ -106,7 +115,7 @@
             <label for="attention" class="col-md-4 text-md-end">{{ __('Attention') }}</label>
 
             <div class="col-md-6 offset-md-1">
-                <p>{{ $data['attention'] }}</p>
+                <p>{!! nl2br(e($data['attention'])) !!}</p>
             </div>
             <input name="attention" value="{{ $data['attention'] }}" type="hidden">
         </div>
@@ -124,7 +133,7 @@
             <label for="deadline" class="col-md-4 text-md-end">{{ __('Deadline') }}</label>
 
             <div class="col-md-4 offset-md-1">
-                <p>{{ $data['deadline'] }}</p>
+                <p>{{ str_replace('T', ' ', $data['deadline']) }}</p>
             </div>
             <input name="deadline" value="{{ $data['deadline'] }}" type="hidden">
         </div>
@@ -139,10 +148,10 @@
                     {{ __('Back') }}
                 </button>
             @elseif($target == 'edit_confirm')
-                <button type="submit" name="update" class="btn btn-primary">
+                <button type="submit" name="update" class="btn btn-primary col-md-2">
                     {{ __('Update') }}
                 </button>
-                <button type="submit" name="back" value="true" class="btn btn-danger">
+                <button type="submit" name="back" value="true" class="btn btn-danger col-md-2 offset-md-1">
                     {{ __('Back') }}
                 </button>
             @endif
