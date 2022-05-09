@@ -26,15 +26,15 @@ class UserController extends Controller
         return view('user/edit', compact('user'));
     }
 
-    public function update(Request $request, User $user)
+    public function update(Request $request)
     {
-        // $user = Auth::user();
+        $user = Auth::user();
         $user->username = $request->username;
         $user->introduction = $request->introduction;
 
-        if (!empty($request->image)) {
-            $image = $request->file('image');
-            $path = $image->store('user', 'public');
+        if (!empty($request->profile_image)) {
+            $image = $request->file('profile_image');
+            $path = $image->store('storage/user');
             $user->profile_image = $path;
         }
 
