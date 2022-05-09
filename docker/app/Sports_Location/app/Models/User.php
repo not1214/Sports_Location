@@ -57,4 +57,19 @@ class User extends Authenticatable
     {
         $this->hasMany(Event::class, 'user_id', 'id');
     }
+
+    public function comments()
+    {
+        $this->hasMany(Comment::class, 'user_id', 'id');
+    }
+
+    public function favorites()
+    {
+        $this->hasMany(Favorite::class, 'user_id', 'id');
+    }
+
+    public function reservations()
+    {
+        $this->hasMany(Reservation::class, 'user_id', 'id');
+    }
 }

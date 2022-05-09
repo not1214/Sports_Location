@@ -26,9 +26,9 @@ class UserController extends Controller
         return view('user/edit', compact('user'));
     }
 
-    public function update(Request $request)
+    public function update(Request $request, User $user)
     {
-        $user = Auth::user();
+        // $user = Auth::user();
         $user->username = $request->username;
         $user->introduction = $request->introduction;
 
@@ -47,9 +47,9 @@ class UserController extends Controller
         return view('user/unsubscribe');
     }
 
-    public function withdraw()
+    public function withdraw(User $user)
     {
-        $user = Auth::user();
+        // $user = Auth::user();
         $user->delete();
         return redirect('/');
     }
@@ -108,6 +108,9 @@ class UserController extends Controller
 
     public function show($username)
     {
+        if ($username == Auth::user()->username) {
+            return redirect()->route('user.myPage');
+        }
         $user = User::whereUsername($username)->first();
         return view('user.show', compact('user'));
     }
