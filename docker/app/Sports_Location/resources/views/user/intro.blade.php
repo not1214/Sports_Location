@@ -24,7 +24,7 @@
         </div>
       </div>
       <div class="row mt-5">
-        <p class="introduction ps-md-5">{{ $user->introduction }}</p>
+        <p class="introduction ps-md-5">{!! nl2br(e($user->introduction)) !!}</p>
       </div>
       <div class="row mt-5 justify-content-center">
         <a href="{{ route('user.createdEvents') }}" class="btn btn-info col-10 col-md-5 me-md-3">作成イベント一覧</a>

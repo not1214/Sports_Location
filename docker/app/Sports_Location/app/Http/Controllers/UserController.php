@@ -33,9 +33,11 @@ class UserController extends Controller
         $user->introduction = $request->introduction;
 
         if (!empty($request->profile_image)) {
-            $image = $request->file('profile_image');
-            $path = $image->store('storage/user');
-            $user->profile_image = $path;
+            Storage::delete($user->profile_image);
+            $image = $request->profile_image;
+            $path = $image->store('public/user');
+            $read_path = str_replace('public/', 'storage/', $path);
+            $user->profile_image = $read_path;
         }
 
         $user->save();
@@ -47,10 +49,11 @@ class UserController extends Controller
         return view('user/unsubscribe');
     }
 
-    public function withdraw(User $user)
+    public function withdraw()
     {
-        // $user = Auth::user();
+        $user = Auth::user();
         $user->delete();
+        Auth::logout();
         return redirect('/');
     }
 

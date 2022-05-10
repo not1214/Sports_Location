@@ -33,7 +33,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('myPage/edit', 'App\Http\Controllers\UserController@edit')->name('user.edit');
     Route::put('myPage', 'App\Http\Controllers\UserController@update')->name('user.update');
     Route::get('myPage/unsubscribe', 'App\Http\Controllers\UserController@unsubscribe')->name('user.unsubscribe');
-    Route::delete('myPage/withdraw', 'App\Http\Controllers\UserController@withdraw')->name('user.withdraw');
+    Route::post('myPage/withdraw', 'App\Http\Controllers\UserController@withdraw')->name('user.withdraw');
     Route::post('myPage/follow', 'App\Http\Controllers\UserController@follow')->name('user.follow');
     Route::delete('myPage/unFollow', 'App\Http\Controllers\UserController@unFollow')->name('user.unFollow');
     Route::get('myPage/events', 'App\Http\Controllers\UserController@createdEvents')->name('user.createdEvents');
