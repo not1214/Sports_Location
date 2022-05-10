@@ -30,7 +30,7 @@
                 <a href="/events/{{ $event->id }}/edit" class="btn btn-primary col-md-3 ms-2">編集する</a>
                 <a href="#" class="btn btn-danger col-md-3 ms-2">削除する</a>
             @else
-                <a href="#" class="btn btn-primary" @if($event->status == '0') disabled @endif>応募する</a>
+                <a href="#" class="btn btn-primary @if($event->status == '0' || empty($event->user->username)) disabled @endif">応募する</a>
             @endif
         </div>
     </div>
