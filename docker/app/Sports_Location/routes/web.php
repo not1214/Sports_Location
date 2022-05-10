@@ -36,8 +36,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put('myPage', 'App\Http\Controllers\UserController@update')->name('user.update');
     Route::get('myPage/unsubscribe', 'App\Http\Controllers\UserController@unsubscribe')->name('user.unsubscribe');
     Route::post('myPage/withdraw', 'App\Http\Controllers\UserController@withdraw')->name('user.withdraw');
-    Route::post('myPage/follow', 'App\Http\Controllers\UserController@follow')->name('user.follow');
-    Route::delete('myPage/unFollow', 'App\Http\Controllers\UserController@unFollow')->name('user.unFollow');
     Route::get('myPage/events', 'App\Http\Controllers\UserController@createdEvents')->name('user.createdEvents');
     Route::get('myPage/pastEvents', 'App\Http\Controllers\UserController@pastEvents')->name('user.pastEvents');
     Route::get('myPage/reservations', 'App\Http\Controllers\UserController@reservedEvents')->name('user.reservedEvents');
@@ -46,6 +44,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('myPage/followers', 'App\Http\Controllers\UserController@myFollowers')->name('user.my_followers');
     Route::get('{username}', 'App\Http\Controllers\UserController@show')->name('user.show');
     Route::get('{username}/events', 'App\Http\Controllers\UserController@events')->name('user.events');
+    Route::get('{username}/follow', 'App\Http\Controllers\UserController@follow')->name('user.follow');
+    Route::get('{username}/unFollow', 'App\Http\Controllers\UserController@unFollow')->name('user.unFollow');
     Route::get('{username}/followings', 'App\Http\Controllers\UserController@followings')->name('user.followings');
     Route::get('{username}/followers', 'App\Http\Controllers\UserController@followers')->name('user.followers');
 });

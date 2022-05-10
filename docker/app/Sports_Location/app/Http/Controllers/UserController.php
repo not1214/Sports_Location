@@ -11,13 +11,16 @@ use App\Models\User;
 use App\Models\Event;
 use App\Models\Reservation;
 use App\Models\Favorite;
+use App\Models\Relationship;
 
 class UserController extends Controller
 {
     public function myPage()
     {
         $user = Auth::user();
-        return view('user/myPage', compact('user'));
+        $followings = Relationship::where('following_id', $user->id)->get();
+        $followers = Relationship::where('followed_id', $user->id)->get();
+        return view('user/myPage', compact('user', 'followings', 'followers'));
     }
 
     public function edit()
@@ -89,22 +92,35 @@ class UserController extends Controller
 
     public function myFollowings()
     {
-
+        $user = Auth::user();
+        $followings = $user->following()->get();
+        return view('user.following', compact('user', 'followings'));
     }
 
     public function myFollowers()
     {
-
+        $user = Auth::user();
+        $followers = $user->followed()->get();
+        return view('user.follower', compact('user', 'relationships'));
     }
 
-    public function follow()
+    public function follow($username)
     {
-
+        $user = User::whereUsername($username)->first();
+        $follow = new Relationship();
+        $follow->following_id = Auth::user()->id;
+        $follow->followed_id = $user->id;
+        $follow->save();
+        return back();
     }
 
-    public function unFollow()
+    public function unFollow($username)
     {
-
+        $user = User::whereUsername($username)->first();
+        $follow = Relationship::where('following_id', Auth::user()->id)
+                  ->where('followed_id', $user->id)->first();
+        $follow->delete();
+        return back();
     }
 
     public function show($username)
@@ -113,7 +129,10 @@ class UserController extends Controller
             return redirect()->route('user.myPage');
         }
         $user = User::whereUsername($username)->first();
-        return view('user.show', compact('user'));
+        $follow = Relationship::where([['following_id', Auth::user()->id], ['followed_id', $user->id]])->first();
+        $followings = Relationship::where('following_id', $user->id)->get();
+        $followers = Relationship::where('followed_id', $user->id)->get();
+        return view('user.show', compact('user', 'follow', 'followings', 'followers'));
     }
 
     public function events($username)
@@ -126,10 +145,14 @@ class UserController extends Controller
     public function followings($username)
     {
         $user = User::whereUsername($username)->first();
+        $followings = Relationship::where('following_id', $user->id)->get();
+        return view('user.following', compact('user', 'followings'));
     }
 
     public function followers($username)
     {
         $user = User::whereUsername($username)->first();
+        $relationships = Relationship::where('followed_id', $user->id)->get();
+        return view('user.follower', compact('user', 'relationships'));
     }
 }

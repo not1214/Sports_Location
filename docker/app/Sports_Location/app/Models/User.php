@@ -72,4 +72,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Reservation::class, 'user_id', 'id');
     }
+
+    public function followed()
+    {
+        return $this->belongsToMany(User::class, 'relationships', 'followed_id', 'following_id');
+    }
+
+    public function following()
+    {
+        return $this->belongsToMany(User::class, 'relationships', 'following_id', 'followed_id');
+    }
 }
