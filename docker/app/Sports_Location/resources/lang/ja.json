@@ -47,5 +47,8 @@
   "Status":"募集ステータス",
   "Create":"作成する",
   "Update":"更新する",
-  "Back":"戻る"
+  "Back":"戻る",
+  "Profile_image":"プロフィール画像",
+  "Introduction":"紹介文",
+  "Unsubscribe":"退会する"
 }

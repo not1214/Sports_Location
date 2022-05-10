@@ -4,9 +4,9 @@
 
 <div class="container">
     
-    @if($event->status == '0')
-        <div class="row mb-3 text-center text-danger">
-            募集は終了しました。
+    @if($event->status == '0' || empty($event->user->username))
+        <div class="row mb-3 align-items-center text-white bg-danger">
+            <div class="text-center p-3">募集は終了しました。</div>
         </div>
     @endif
 
@@ -19,14 +19,18 @@
             @endif
         </div>
         <div class="col-md-6 my-auto">
+            @if(!empty($event->user->username))
             <div class="mb-3">開催者：{{ $event->user->username }}</div>
+            @else
+            <div class="mb-3">開催者：退会済みユーザー</div>
+            @endif
             <h3 class="mb-3">{{ $event->title }}</h3>
             @if(Auth::id() == $event->user_id)
                 <a href="#" class="btn btn-success col-md-3">予約申請一覧</a>
                 <a href="/events/{{ $event->id }}/edit" class="btn btn-primary col-md-3 ms-2">編集する</a>
                 <a href="#" class="btn btn-danger col-md-3 ms-2">削除する</a>
             @else
-                <a href="#" class="btn btn-primary" @if($event->status == '0') disabled @endif>応募する</a>
+                <a href="#" class="btn btn-primary @if($event->status == '0' || empty($event->user->username)) disabled @endif">応募する</a>
             @endif
         </div>
     </div>

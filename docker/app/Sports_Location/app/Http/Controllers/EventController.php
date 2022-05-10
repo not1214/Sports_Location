@@ -199,15 +199,4 @@ class EventController extends Controller
         $event->save();
         return redirect()->route('events.show', [$event->id]);
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

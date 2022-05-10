@@ -37,7 +37,11 @@
               <a href="{{ route('events.show', ['event'=>$event->id]) }}" class="fs-3 fw-bold">{{ $event->title }}</a>
             </div>
             <div class="col-12">
+              @if (!empty($event->user->username))
               開催者：<span><a href="#">{{ $event->user->username }}</a></span>
+              @else
+              開催者：<span>退会済みユーザー</a></span>
+              @endif
             </div>
             <div class="col-12">
               エリア：<span><a href="#">{{ $event->area->name }}</a></span>

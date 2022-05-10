@@ -7,10 +7,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+    use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
 
     /**
      * The attributes that are mass assignable.
@@ -26,6 +30,8 @@ class User extends Authenticatable
         'birthday',
         'gender',
         'password',
+        'profile_image',
+        'introduction'
     ];
 
     /**
@@ -55,5 +61,20 @@ class User extends Authenticatable
     public function favorites()
     {
         return $this->hasMany(Favorite::class, 'user_id', 'id');
+    }
+
+    public function comments()
+    {
+        $this->hasMany(Comment::class, 'user_id', 'id');
+    }
+
+    public function favorites()
+    {
+        $this->hasMany(Favorite::class, 'user_id', 'id');
+    }
+
+    public function reservations()
+    {
+        $this->hasMany(Reservation::class, 'user_id', 'id');
     }
 }
