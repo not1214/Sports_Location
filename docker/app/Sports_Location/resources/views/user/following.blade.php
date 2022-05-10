@@ -12,12 +12,18 @@
       <h4 class="mt-3">{{ $user->username }}</h4>
       @if(Auth::id() == $user->id )
       <a href="{{ route('user.edit') }}" class="col-10 btn btn-outline-secondary mt-5"><i class="fa-solid fa-user-pen"></i></a>
+      @else
+        @if($follow)
+        <a href="{{ route('user.unFollow', ['username'=>$user->username]) }}" class="col-10 btn btn-primary mt-5"><i class="fa-solid fa-user-check"></i></a>
+        @else
+        <a href="{{ route('user.follow', ['username'=>$user->username]) }}" class="col-10 btn btn-outline-secondary mt-5"><i class="fa-solid fa-user-plus"></i></a>
+        @endif
       @endif
     </div>
     
     <div class="col-md-8">
       <div class="row mb-3">
-        <h3>フォロー中ユーザー</h3>
+        <h3>フォロー</h3>
       </div>
       @foreach ($followings as $following)
         <div class="row mb-3 border-bottom">

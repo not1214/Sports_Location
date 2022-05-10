@@ -101,7 +101,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
         $followers = $user->followed()->get();
-        return view('user.follower', compact('user', 'relationships'));
+        return view('user.follower', compact('user', 'followers'));
     }
 
     public function follow($username)
@@ -145,14 +145,16 @@ class UserController extends Controller
     public function followings($username)
     {
         $user = User::whereUsername($username)->first();
-        $followings = Relationship::where('following_id', $user->id)->get();
-        return view('user.following', compact('user', 'followings'));
+        $followings = $user->following()->get();
+        $follow = Relationship::where([['following_id', Auth::user()->id], ['followed_id', $user->id]])->first();
+        return view('user.following', compact('user', 'followings', 'follow'));
     }
 
     public function followers($username)
     {
         $user = User::whereUsername($username)->first();
-        $relationships = Relationship::where('followed_id', $user->id)->get();
-        return view('user.follower', compact('user', 'relationships'));
+        $followers = $user->followed()->get();
+        $follow = Relationship::where([['following_id', Auth::user()->id], ['followed_id', $user->id]])->first();
+        return view('user.follower', compact('user', 'followers', 'follow'));
     }
 }
