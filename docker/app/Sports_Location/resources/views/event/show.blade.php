@@ -30,7 +30,12 @@
                 <a href="/events/{{ $event->id }}/edit" class="btn btn-primary col-md-3 ms-2">編集する</a>
                 <a href="#" class="btn btn-danger col-md-3 ms-2">削除する</a>
             @else
-                <a href="#" class="btn btn-primary @if($event->status == '0' || empty($event->user->username)) disabled @endif">応募する</a>
+                <a href="#" class="col-md-3 btn btn-primary @if($event->status == '0' || empty($event->user->username)) disabled @endif">応募する</a>
+                @if($favorite)
+                <a href="{{ route('event.unfavorite', ['event' => $event->id ]) }}" class="col-md-3 btn btn-warning "><i class="fa-solid fa-star"></i></a>
+                @else
+                <a href="{{ route('event.favorite', ['event' => $event->id ]) }}" class="col-md-3 ms-2 btn btn-warning"><i class="fa-regular fa-star"></i></a>
+                @endif
             @endif
         </div>
     </div>

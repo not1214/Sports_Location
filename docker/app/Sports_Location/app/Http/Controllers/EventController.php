@@ -10,6 +10,7 @@ use App\Models\Event;
 use App\Models\Area;
 use App\Models\Genre;
 use App\Models\User;
+use App\Models\Favorite;
 
 class EventController extends Controller
 {
@@ -111,7 +112,8 @@ class EventController extends Controller
     public function show($id)
     {
         $event = Event::findOrFail($id);
-        return view('event/show', compact('event'));
+        $favorite = Favorite::where([['event_id', $id], ['user_id', Auth::user()->id]])->first();
+        return view('event/show', compact('event', 'favorite'));
     }
 
     /**
@@ -198,5 +200,22 @@ class EventController extends Controller
 
         $event->save();
         return redirect()->route('events.show', [$event->id]);
+    }
+
+    public function favorite($id)
+    {
+        $favorite = new Favorite();
+        $favorite->event_id = $id;
+        $favorite->user_id = Auth::user()->id;
+        $favorite->save();
+        return back();
+    }
+
+    public function unfavorite($id)
+    {
+        $user = Auth::user()->id;
+        $favorite = Favorite::where([['event_id', $id], ['user_id', $user]])->first();
+        $favorite->delete();
+        return back();
     }
 }
