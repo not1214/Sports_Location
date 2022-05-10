@@ -49,6 +49,11 @@ class User extends Authenticatable
 
     public function events()
     {
-        $this->hasMany(Event::class, 'user_id', 'id');
+        return $this->hasMany(Event::class, 'user_id', 'id');
+    }
+
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class, 'user_id', 'id');
     }
 }

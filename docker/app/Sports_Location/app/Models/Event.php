@@ -44,6 +44,11 @@ class Event extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class, 'event_id', 'id');
+    }
+
     public function getFormattedDeadlineAttribute()
     {
         return Carbon::createFromFormat('Y-m-d H:i:s', $this->attributes['deadline'])->format('Y年m月d日 H時i分');
