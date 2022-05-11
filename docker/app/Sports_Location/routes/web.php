@@ -48,6 +48,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('{username}/unFollow', 'App\Http\Controllers\UserController@unFollow')->name('user.unFollow');
     Route::get('{username}/followings', 'App\Http\Controllers\UserController@followings')->name('user.followings');
     Route::get('{username}/followers', 'App\Http\Controllers\UserController@followers')->name('user.followers');
+
+    Route::resource('events.reservations', 'App\Http\Controllers\ReservationController', ['except' => ['show']]);
 });
 
 //Admin認証不要

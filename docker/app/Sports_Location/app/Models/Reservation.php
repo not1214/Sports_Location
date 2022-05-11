@@ -14,6 +14,13 @@ class Reservation extends Model
         'event_id',
         'permission',
         'comment',
+        'reply',
+    ];
+
+    const PERMISSION = [
+        1 => '未承認',
+        2 => '承認',
+        3 => '棄却',
     ];
 
     public function event()
@@ -24,5 +31,17 @@ class Reservation extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getPermissionTextAttribute()
+    {
+        switch ($this->attributes['permission']) {
+            case 1:
+                return "未承認";
+            case 2:
+                return "承認";
+            case 3:
+                return "棄却";
+        }
     }
 }
