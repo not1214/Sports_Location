@@ -6,9 +6,9 @@
     <div class="col-md-4 me-3">
       <div class="row text-center mb-2">
         @if(isset($event->event_image))
-        <img src="{{ asset($event->event_image) }}" class="event-image">
+        <img src="{{ asset($event->event_image) }}" class="event-image" style="border-radius:50%;">
         @else
-        <img src="{{ asset('images/no-image.jpg') }}" class="event-image">
+        <img src="{{ asset('images/no-image.jpg') }}" class="event-image" style="border-radius:50%;">
         @endif
         <h4 class="mt-3">{{ $event->title }}</h4>
       </div>

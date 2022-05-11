@@ -12,18 +12,29 @@ class ReservationController extends Controller
 {
     public function index(Event $event)
     {
-        $reservations = Reservation::all();
+        if ($event->user_id != Auth::user()->id) {
+            return redirect()->route('events.show', ['event' => $event->id]);
+        }
 
+        $reservations = Reservation::all();
         return view('reservation/index', compact('reservations', 'event'));
     }
 
     public function create(Event $event)
     {
+        if ($event->user_id == Auth::user()->id) {
+            return redirect()->route('events.show', ['event' => $event->id]);
+        }
+
         return view('reservation/create', compact('event'));
     }
 
     public function store(Request $request, Event $event)
     {
+        if ($event->user_id == Auth::user()->id) {
+            return redirect()->route('events.show', ['event' => $event->id]);
+        }
+
         $reservation = new Reservation();
         $reservation->user_id = Auth::user()->id;
         $reservation->event_id = $event->id;
@@ -33,25 +44,47 @@ class ReservationController extends Controller
         return redirect()->route('user.reservedEvents');
     }
 
+    public function show(Event $event, $id)
+    {
+        if ($event->user_id == Auth::user()->id) {
+            return redirect()->route('events.reservations.index', ['event' => $event->id]);
+        }
+
+        $reservation = Reservation::findOrFail($id);
+        return view('reservation/show', compact('reservation', 'event'));
+    }
+
     public function edit(Event $event, $id)
     {
+        if ($event->user_id != Auth::user()->id) {
+            return redirect()->route('events.show', ['event' => $event->id]);
+        }
+
         $reservation = Reservation::findOrFail($id);
         return view('reservation/edit', compact('reservation', 'event'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Event $event, Request $request, $id)
     {
-        $reservation = Reservation::findOrFail($id);
+        if ($event->user_id != Auth::user()->id) {
+            return redirect()->route('events.show', ['event' => $event->id]);
+        }
+
+        $reservation = Reservation::find($id);
 
         $reservation->permission = $request->permission;
         $reservation->reply = $request->reply;
         $reservation->save();
 
-        return redirect()->route('events.reservation.index', ['event' => $reservation->event_id]);
+        return redirect()->route('events.reservations.index', ['event' => $reservation->event_id]);
     }
 
-    public function destroy($id)
+    public function destroy(Event $event, $id)
     {
+        if ($event->user_id == Auth::user()->id) {
+            return redirect()->route('events.reservations.index', ['event' => $event->id]);
+        }
+
         $reservation = Reservation::findOrFail($id);
         $reservation->delete();
 

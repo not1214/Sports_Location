@@ -7,9 +7,9 @@
     <div class="col-md-4 me-3">
       <div class="row text-center mb-2">
         @if(isset($event->event_image))
-        <img src="{{ asset($event->event_image) }}" class="event-image">
+        <img src="{{ asset($event->event_image) }}" class="event-image" style="border-radius:50%;">
         @else
-        <img src="{{ asset('images/no-image.jpg') }}" class="event-image">
+        <img src="{{ asset('images/no-image.jpg') }}" class="event-image" style="border-radius:50%;">
         @endif
         <h4 class="mt-3">{{ $event->title }}</h4>
       </div>
@@ -39,13 +39,23 @@
       <div class="row mb-3 mt-3 mt-md-0">
         <h3>応募申請詳細</h3>
       </div>
+      <div class="row mb-3">
+        @if(isset($reservation->user->profile_image))
+        <img class="col-md-1 me-2" src="{{ asset($reservation->user->profile_image) }}" style="border-radius:50%;">
+        @else
+        <img class="col-md-1 me-2" src="{{ asset('images/no-image.png') }}">
+        @endif
+        <div class="col-md-8">
+          <a href="{{ route('user.show', ['username'=>$reservation->user->username]) }}" class="fs-4 fw-bold">{{ $reservation->user->username }}</a>
+        </div>
+      </div>
       <div class="row">
         <label>コメント：</label>
         <p>{!! nl2br(e($reservation->comment)) !!}</p>
       </div>
       <form action="{{ route('events.reservations.update', ['event'=>$event->id, 'reservation'=>$reservation->id]) }}" method="post" name="update">
-      @csrf
       @method('patch')
+      @csrf
         <div class="row mb-3">
           <div class="col-md-5">
             <select id="permission" class="form-select" name="permission" required>
