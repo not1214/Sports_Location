@@ -38,7 +38,7 @@
             </div>
             <div class="col-12">
               @if (!empty($event->user->username))
-              開催者：<span><a href="#">{{ $event->user->username }}</a></span>
+              開催者：<span><a href="{{ route('user.show', ['username'=>$event->user->username]) }}">{{ $event->user->username }}</a></span>
               @else
               開催者：<span>退会済みユーザー</a></span>
               @endif

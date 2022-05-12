@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark shadow-sm" style="background-color: #26d0c9">
+<nav class="navbar navbar-expand-md navbar-dark shadow-sm">
   <div class="container">
       <a class="navbar-brand" href="{{ url('/') }}">
           {{ config('app.name') }}

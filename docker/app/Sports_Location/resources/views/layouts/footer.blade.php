@@ -4,7 +4,7 @@
     </a>
     <div style="float:right">
         <ul style="list-style:none;">
-            <li><a href="#">お問い合わせ</a></li>
+            <li><a href="{{ route('contact.form') }}">お問い合わせ</a></li>
             <li><a href="#">利用ルール</a></li>
         </ul>
     </div>

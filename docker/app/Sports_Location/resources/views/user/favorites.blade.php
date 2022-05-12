@@ -11,12 +11,12 @@
       <img src="{{ asset('images/no-image(user).jpg') }}" class="profile-image">
       @endif
       <h4 class="mt-3">{{ $user->username }}</h4>
-      <a href="{{ route('user.edit') }}" class="col-10 btn btn-secondary mt-5 fa-solid fa-user-pen"></a>
+      <a href="{{ route('user.edit') }}" class="col-10 btn btn-outline-secondary mt-5"><i class="fa-solid fa-user-pen"></i></a>
     </div>
     
     <div class="col-md-8">
       <div class="row">
-        <h3>お気に入り一覧</h3>
+        <h3>お気に入りイベント一覧</h3>
         @foreach ($favorites as $favorite)
           <div class="row mb-3">
             @if(isset($favorite->event->event_image))

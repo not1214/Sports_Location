@@ -17,11 +17,12 @@ use Illuminate\Support\Facades\Auth;
 Auth::routes();
 
 // User認証不要
-Route::get('/', function () {
-    return view('top');
-});
-
+Route::get('/', 'App\Http\Controllers\HomeController@top');
 Route::get('events', 'App\Http\Controllers\EventController@index')->name('events.index');
+
+Route::get('/contact', 'App\Http\Controllers\ContactController@form')->name('contact.form');
+Route::post('/contact/confirm', 'App\Http\Controllers\ContactController@confirm')->name('contact.confirm');
+Route::post('/contact/complete', 'App\Http\Controllers\COntactController@complete')->name('contact.complete');
 
 // Userログイン後
 Route::group(['middleware' => ['auth']], function () {

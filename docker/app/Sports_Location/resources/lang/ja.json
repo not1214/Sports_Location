@@ -50,5 +50,7 @@
   "Back":"戻る",
   "Profile_image":"プロフィール画像",
   "Introduction":"紹介文",
-  "Unsubscribe":"退会する"
+  "Unsubscribe":"退会する",
+  "Subject":"件名",
+  "Body":"お問い合わせ内容"
 }
