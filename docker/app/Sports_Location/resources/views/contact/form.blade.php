@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
   <h3 class="text-center mb-3">お問い合わせフォーム</h3>
-  <form method="POST" action="{{ route('contact.confirm') }}">
+  <form method="post" action="{{ route('contact.confirm') }}">
     @csrf
     <div class="row mb-3">
       <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>

@@ -22,7 +22,8 @@ Route::get('events', 'App\Http\Controllers\EventController@index')->name('events
 
 Route::get('/contact', 'App\Http\Controllers\ContactController@form')->name('contact.form');
 Route::post('/contact/confirm', 'App\Http\Controllers\ContactController@confirm')->name('contact.confirm');
-Route::post('/contact/complete', 'App\Http\Controllers\COntactController@complete')->name('contact.complete');
+Route::post('/contact/send', 'App\Http\Controllers\ContactController@send')->name('contact.send');
+Route::get('/contact/complete', 'App\Http\Controllers\ContactController@complete')->name('contact.complete');
 
 // Userログイン後
 Route::group(['middleware' => ['auth']], function () {
