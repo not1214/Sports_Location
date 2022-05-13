@@ -24,7 +24,8 @@ class EventController extends Controller
     {
         $events = Event::latest()->get();
         $genres = Genre::all();
-        return view('event/index', compact('events', 'genres'));
+        $areas = Area::all();
+        return view('event/index', compact('events', 'genres', 'areas'));
     }
 
     /**
@@ -225,5 +226,10 @@ class EventController extends Controller
         $favorite = Favorite::where([['event_id', $id], ['user_id', $user]])->first();
         $favorite->delete();
         return back();
+    }
+
+    public function search(Request $request)
+    {
+
     }
 }

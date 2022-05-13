@@ -31,7 +31,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('events/create/confirm', [\App\Http\Controllers\EventController::class, 'createConfirm'])->name('events.create_confirm');
     Route::post('events/{event}/edit/confirm', [\App\Http\Controllers\EventController::class, 'editConfirm'])->name('events.edit_confirm');
     Route::get('events/{event}/favorite', 'App\Http\Controllers\EventController@favorite')->name('event.favorite');
-    Route::get('event/{event}/unfavorite', 'App\Http\Controllers\EventController@unfavorite')->name('event.unfavorite');
+    Route::get('events/{event}/unfavorite', 'App\Http\Controllers\EventController@unfavorite')->name('event.unfavorite');
+    Route::get('events/search', 'App\Http\Controllers\EventController@search')->name('event.search');
 
     Route::get('myPage', 'App\Http\Controllers\UserController@myPage')->name('user.myPage');
     Route::get('myPage/edit', 'App\Http\Controllers\UserController@edit')->name('user.edit');
