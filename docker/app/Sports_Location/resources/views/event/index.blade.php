@@ -17,7 +17,7 @@
         <div class="border border-dark p-3">
           <ul class="list-unstyled">
             @foreach($genres as $genre)
-              <a href="#"><li>{{ $genre->genre_name }}</li></a>
+              <a href="{{ route('genre.show', ['genre_id'=>$genre->id]) }}"><li>{{ $genre->genre_name }}</li></a>
             @endforeach
           </ul>
         </div>
@@ -27,32 +27,31 @@
     <div class="col-md-8 ms-5">
       <h3>イベントを探す</h3>
       <div class="row mb-3 p-2" style="background-color:#FFFFCC;">
-        <form action="{{ route('event.search') }}" method="post">
-        @method('get')
+        <form action="{{ route('events.index') }}" method="get">
         @csrf
           <div class="row mb-2">
             <div class="col-md-6">
               <div class="row">
                 <label for="genre" class="col-md-4 col-form-label text-md-end">{{ __('Genre') }}</label>
                 <div class="col-md-7">
-                  <select id="genre" class="form-select" name="genre" required>
-                    <option style='display:none;'>選択してください</option>
+                  <select id="genre" class="form-select" name="genre">
+                    <option value="" style='display:none;' @if(empty($genre_id)) selected @endif>選択してください</option>
                     @foreach($genres as $genre)
-                      <option value="{{ $genre->id }}">{{ $genre->genre_name }}</option>
+                      <option value="{{ $genre->id }}" @if($genre_id == $genre->id) selected @endif>{{ $genre->genre_name }}</option>
                     @endforeach
                   </select>
                 </div>
               </div>
             </div>
-            
+
             <div class="col-md-6">
               <div class="row">
                 <label for="area" class="col-md-3 col-form-label text-md-end">{{ __('Area') }}</label>
                 <div class="col-md-7">
-                  <select id="area" class="form-select" name="area" required>
-                    <option style='display:none;'>選択してください</option>
+                  <select id="area" class="form-select" name="area">
+                    <option value="" style='display:none;' @if(empty($area_id)) selected @endif>選択してください</option>
                     @foreach($areas as $area)
-                      <option value="{{ $area->id }}">{{ $area->name }}</option>
+                      <option value="{{ $area->id }}" @if($area_id == $area->id) selected @endif>{{ $area->name }}</option>
                     @endforeach
                   </select>
                 </div>
@@ -63,12 +62,12 @@
           <div class="row mb-2">
             <label for="keyword" class="col-md-2 col-form-label text-md-end">キーワード</label>
             <div class="col-md-9">
-              <input id="keyword" type="text" class="form-control" name="keyword">
+              <input id="keyword" type="text" class="form-control" name="keyword" value={{ $keyword }}>
             </div>
           </div>
 
-          <div class="row mb-2">
-            <button type="submit" class="btn btn-info col-md-2 offset-md-9">{{ __('Search') }}</button>
+          <div class="row mb-2 justify-content-center">
+            <button type="submit" class="btn btn-info col-md-2">{{ __('Search') }}</button>
           </div>
         </form>
       </div>
@@ -94,10 +93,10 @@
                 @endif
               </div>
               <div class="col-12">
-                エリア：<span><a href="#">{{ $event->area->name }}</a></span>
+                エリア：<span><a href="{{ route('area.show', ['area_id'=>$event->area->id]) }}">{{ $event->area->name }}</a></span>
               </div>
               <div class="col-12">
-                ジャンル：<span><a href="#">{{ $event->genre->genre_name }}</a></span>
+                ジャンル：<span><a href="{{ route('genre.show', ['genre_id'=>$event->genre->id]) }}">{{ $event->genre->genre_name }}</a></span>
               </div>
             </div>
           </div>

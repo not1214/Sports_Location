@@ -20,12 +20,27 @@ class EventController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $events = Event::latest()->get();
+        $genre_id = $request->genre;
+        $area_id = $request->area;
+        $keyword = $request->keyword;
+        $query = Event::query();
+
+        if (!empty($genre_id)) {
+            $query->where('genre_id', $genre_id);
+        }
+        if (!empty($area_id)) {
+            $query->where('area_id', $area_id);
+        }
+        if (!empty($keyword)) {
+            $query->where('title', 'like', '%'. $keyword. '%');
+        }
+
+        $events = $query->latest()->get();
         $genres = Genre::all();
         $areas = Area::all();
-        return view('event/index', compact('events', 'genres', 'areas'));
+        return view('event/index', compact('events', 'genres', 'areas', 'genre_id', 'area_id', 'keyword'));
     }
 
     /**
@@ -226,10 +241,5 @@ class EventController extends Controller
         $favorite = Favorite::where([['event_id', $id], ['user_id', $user]])->first();
         $favorite->delete();
         return back();
-    }
-
-    public function search(Request $request)
-    {
-
     }
 }

@@ -32,7 +32,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('events/{event}/edit/confirm', [\App\Http\Controllers\EventController::class, 'editConfirm'])->name('events.edit_confirm');
     Route::get('events/{event}/favorite', 'App\Http\Controllers\EventController@favorite')->name('event.favorite');
     Route::get('events/{event}/unfavorite', 'App\Http\Controllers\EventController@unfavorite')->name('event.unfavorite');
-    Route::get('events/search', 'App\Http\Controllers\EventController@search')->name('event.search');
 
     Route::get('myPage', 'App\Http\Controllers\UserController@myPage')->name('user.myPage');
     Route::get('myPage/edit', 'App\Http\Controllers\UserController@edit')->name('user.edit');
@@ -53,6 +52,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('{username}/followers', 'App\Http\Controllers\UserController@followers')->name('user.followers');
 
     Route::resource('events.reservations', 'App\Http\Controllers\ReservationController');
+
+    Route::get('events/genre/{genre_id}', 'App\Http\Controllers\GenreController@show')->name('genre.show');
+    Route::get('events/area/{area_id}', 'App\Http\Controllers\AreaController@show')->name('area.show');
 });
 
 //Admin認証不要
