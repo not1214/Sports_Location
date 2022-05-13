@@ -26,13 +26,13 @@
           @else
             <img class="col-md-2 me-2" src="{{ asset('images/no-image.png') }}">
           @endif
-          <div class="col-md-7">
+          <div class="col-md-6">
             <div class="col-12">
               <a href="{{ route('events.show', ['event'=>$event->id]) }}" class="fs-3 fw-bold">{{ $event->title }}</a>
             </div>
             <div class="col-12">
               @if (!empty($event->user->username))
-              開催者：<span><a href="#">{{ $event->user->username }}</a></span>
+              開催者：<span><a href="{{ route('user.show', ['username'=>$user->username]) }}">{{ $event->user->username }}</a></span>
               @else
               開催者：<span>退会済みユーザー</a></span>
               @endif
@@ -44,8 +44,8 @@
               ジャンル：<span><a href="#">{{ $event->genre->genre_name }}</a></span>
             </div>
           </div>
-          <div class="col-md-2 d-flex align-items-center">
-            <a href="{{ route('events.show', ['event'=>$event->id]) }}" class="btn btn-primary">詳細</a>
+          <div class="col-md-3 d-flex align-items-center">
+            <a href="#" class="btn btn-primary">レビューする</a>
           </div>
         </div>
       @endforeach

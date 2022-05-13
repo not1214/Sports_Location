@@ -70,9 +70,9 @@ class UserController extends Controller
     public function pastEvents()
     {
         $user = Auth::user();
-        $events = DB::table('events')->join('reservations', 'events.id', '=', 'reservations.event_id')
-                      ->where([['reservations.user_id', '$user->id'], ['permission', '2'], ['date', '>', Carbon::today()]])
-                      ->get();
+        $events = Event::Join('reservations', 'events.id', '=', 'reservations.event_id')
+                  ->where([['reservations.user_id', $user->id], ['permission', '2'], ['date', '<', Carbon::today()]])
+                  ->get();
         return view('user.pastEvents', compact('user', 'events'));
     }
 
