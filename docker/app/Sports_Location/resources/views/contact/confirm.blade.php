@@ -33,7 +33,7 @@
       <label for="body" class="col-md-4 text-md-end">{{ __('Body') }}</label>
       <div class="col-md-6">
         <div id="body" name="body">{!! nl2br(e($data['body'])) !!}</div>
-        <input id="subject" type="hidden" name="subject" value="{{ $data['body'] }}">
+        <input id="body" type="hidden" name="body" value="{{ $data['body'] }}">
       </div>
     </div>
 
@@ -42,7 +42,7 @@
         <button type="submit" name="send" class="col-md-1 btn btn-primary">
           {{ __('Send') }}
         </button>
-        <button type="submit" name="back" class="btn btn-danger col-md-1 offset-md-1">
+        <button type="submit" name="back" value="true" class="btn btn-danger col-md-1 offset-md-1">
           {{ __('Back') }}
         </button>
       </div>

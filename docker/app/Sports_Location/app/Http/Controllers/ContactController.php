@@ -20,7 +20,7 @@ class ContactController extends Controller
 
     public function send(Request $request)
     {
-        if ($request->input('action') == 'back') {
+        if ($request->get('back')) {
             return redirect()->route('contact.form')->withInput();
         }
 

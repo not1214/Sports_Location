@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use App\Models\Event;
 use App\Models\Area;
 use App\Models\Genre;
@@ -21,7 +22,7 @@ class EventController extends Controller
      */
     public function index()
     {
-        $events = Event::all();
+        $events = Event::latest()->get();
         $genres = Genre::all();
         return view('event/index', compact('events', 'genres'));
     }
@@ -113,7 +114,10 @@ class EventController extends Controller
     {
         $event = Event::findOrFail($id);
         $favorite = Favorite::where([['event_id', $id], ['user_id', Auth::user()->id]])->first();
-        return view('event/show', compact('event', 'favorite'));
+        $joined_event  = DB::table('events')->join('reservations', 'events.id', '=', 'reservations.event_id')
+                         ->where([['reservations.user_id', Auth::user()->id], ['permission', '2'], ['event_id', '=', $event->id]])
+                         ->first();
+        return view('event/show', compact('event', 'favorite', 'joined_event'));
     }
 
     /**
@@ -125,6 +129,10 @@ class EventController extends Controller
     public function edit($id)
     {
         $event = Event::findOrFail($id);
+        if ($event->date < Carbon::today() || $event->user_id != Auth::user()->id) {
+            return redirect()->route('events.show', ['event'=>$event->id]);
+        }
+
         $areas = Area::all();
         $genres = Genre::all();
         return view('event/edit', compact('event', 'areas', 'genres'));
@@ -134,7 +142,7 @@ class EventController extends Controller
     {
         $data = $request->except('image');
 
-        if ($request->hasFile('image')) {
+        if (!empty($request->image)) {
             $temp_path = $request->file('image')->store('public/temp');
             $read_temp_path = str_replace('public/', 'storage/', $temp_path);
             $data['temp_path'] = $temp_path;
