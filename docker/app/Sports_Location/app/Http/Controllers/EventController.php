@@ -175,7 +175,7 @@ class EventController extends Controller
         $event = Event::findOrFail($id);
         $data = $request->session()->get('data');
 
-        if (!empty($request->image)) {
+        if (!empty($data['temp_path'])) {
             $temp_path = $data['temp_path'];
             $filename = str_replace('public/temp/', '', $temp_path);
             $storage_path = 'public/event/'.$filename;
