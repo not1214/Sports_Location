@@ -25,7 +25,21 @@ Route::post('/contact/confirm', 'App\Http\Controllers\ContactController@confirm'
 Route::post('/contact/send', 'App\Http\Controllers\ContactController@send')->name('contact.send');
 Route::get('/contact/complete', 'App\Http\Controllers\ContactController@complete')->name('contact.complete');
 
-// Userログイン後
+//Admin認証不要
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('login', [App\Http\Controllers\Admin\LoginController::class, 'showLoginForm'])->name('admin.login');
+    Route::post('login', [App\Http\Controllers\Admin\LoginController::class, 'login']);
+});
+
+// Adminログイン認証
+Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
+    Route::post('logout', [App\Http\Controllers\Admin\LoginController::class, 'logout'])->name('admin.logout');
+    Route::get('home', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.home');
+
+    Route::resource('events', 'App\Http\Controllers\Admin\EventController', ['except' => ['create', 'store', 'destroy']]);
+});
+
+// Userログイン認証
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('events', 'App\Http\Controllers\EventController', ['except' => ['index']]);
     Route::post('events/create/confirm', [\App\Http\Controllers\EventController::class, 'createConfirm'])->name('events.create_confirm');
@@ -55,19 +69,4 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('events/genre/{genre_id}', 'App\Http\Controllers\GenreController@show')->name('genre.show');
     Route::get('events/area/{area_id}', 'App\Http\Controllers\AreaController@show')->name('area.show');
-});
-
-//Admin認証不要
-Route::group(['prefix' => 'admin'], function () {
-    Route::get('/', function () {
-        return redirect('/admin/home');
-    });
-    Route::get('login', [App\Http\Controllers\Admin\LoginController::class, 'showLoginForm'])->name('admin.login');
-    Route::post('login', [App\Http\Controllers\Admin\LoginController::class, 'login']);
-});
-
-// Adminログイン後
-Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
-    Route::post('logout', [App\Http\Controllers\Admin\LoginController::class, 'logout'])->name('admin.logout');
-    Route::get('home', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.home');
 });

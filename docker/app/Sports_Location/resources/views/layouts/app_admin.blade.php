@@ -25,7 +25,7 @@
 
 <body>
     <div id="app">
-        <header>
+        <header style="background-color: #26d0c9">
             @include('layouts/header_admin')
         </header>
         <main>
