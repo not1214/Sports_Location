@@ -32,11 +32,25 @@ Route::group(['prefix' => 'admin'], function () {
 });
 
 // Adminログイン認証
-Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
-    Route::post('logout', [App\Http\Controllers\Admin\LoginController::class, 'logout'])->name('admin.logout');
-    Route::get('home', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.home');
+Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin', 'as' => 'admin.'], function () {
+    Route::post('logout', [App\Http\Controllers\Admin\LoginController::class, 'logout'])->name('logout');
+    Route::get('home', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('home');
 
     Route::resource('events', 'App\Http\Controllers\Admin\EventController', ['except' => ['create', 'store', 'destroy']]);
+    Route::post('events/{event}/edit/confirm', [\App\Http\Controllers\Admin\EventController::class, 'confirm'])->name('events.confirm');
+
+    Route::get('users', 'App\Http\Controllers\Admin\UserController@index')->name('user.index');
+    Route::get('users/{username}', 'App\Http\Controllers\Admin\UserController@show')->name('user.show');
+    Route::get('users/{username}/edit', 'App\Http\Controllers\Admin\UserController@edit')->name('user.edit');
+    Route::put('users/{username}', 'App\Http\Controllers\Admin\UserController@update')->name('user.update');
+    Route::get('users/{username}/events', 'App\Http\Controllers\Admin\UserController@createdEvents')->name('user.createdEvents');
+    Route::get('users/{username}/pastEvents', 'App\Http\Controllers\Admin\UserController@pastEvents')->name('user.pastEvents');
+    Route::get('users/{username}/followings', 'App\Http\Controllers\Admin\UserController@followings')->name('user.followings');
+    Route::get('users/{username}/followers', 'App\Http\Controllers\Admin\UserController@followers')->name('user.followers');
+
+    Route::get('events/area/{area_id}', 'App\Http\Controllers\AreaController@show')->name('area.show');
+    Route::resource('genres', 'App\Http\Controllers\Admin\GenreController', ['only' => ['index', 'store', 'edit', 'update']]);
+    Route::get('events/genre/{genre_id}', 'App\Http\Controllers\Admin\GenreController@show')->name('genre.show');
 });
 
 // Userログイン認証
