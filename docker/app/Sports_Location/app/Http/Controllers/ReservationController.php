@@ -16,7 +16,7 @@ class ReservationController extends Controller
             return redirect()->route('events.show', ['event' => $event->id]);
         }
 
-        $reservations = Reservation::all();
+        $reservations = Reservation::where('event_id', $event->id)->get();
         return view('reservation/index', compact('reservations', 'event'));
     }
 

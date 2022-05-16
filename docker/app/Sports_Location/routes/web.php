@@ -47,8 +47,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin', 'as' => 'admin.
     Route::get('users/{username}/pastEvents', 'App\Http\Controllers\Admin\UserController@pastEvents')->name('user.pastEvents');
     Route::get('users/{username}/followings', 'App\Http\Controllers\Admin\UserController@followings')->name('user.followings');
     Route::get('users/{username}/followers', 'App\Http\Controllers\Admin\UserController@followers')->name('user.followers');
+    Route::get('users/{username}/unsubscribe', 'App\Http\Controllers\Admin\UserController@unsubscribe')->name('user.unsubscribe');
+    Route::post('users/{username}/withdraw', 'App\Http\Controllers\Admin\UserController@withdraw')->name('user.withdraw');
 
-    Route::get('events/area/{area_id}', 'App\Http\Controllers\AreaController@show')->name('area.show');
+    Route::get('events/area/{area_id}', 'App\Http\Controllers\Admin\AreaController@show')->name('area.show');
     Route::resource('genres', 'App\Http\Controllers\Admin\GenreController', ['only' => ['index', 'store', 'edit', 'update']]);
     Route::get('events/genre/{genre_id}', 'App\Http\Controllers\Admin\GenreController@show')->name('genre.show');
 });

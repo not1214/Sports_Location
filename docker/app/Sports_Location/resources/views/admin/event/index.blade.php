@@ -32,7 +32,7 @@
                   <select id="genre" class="form-select" name="genre">
                     <option value="" style='display:none;' @if(empty($genre_id)) selected @endif>選択してください</option>
                     @foreach($genres as $genre)
-                      <option value="{{ $genre->id }}" @if($genre_id == $genre->id) selected @endif>{{ $genre->genre_name }}</option>
+                      <option value="{{ $genre->id }}" @if(!empty($genre_id)) @if($genre_id == $genre->id) selected @endif @endif>{{ $genre->genre_name }}</option>
                     @endforeach
                   </select>
                 </div>
@@ -46,7 +46,7 @@
                   <select id="area" class="form-select" name="area">
                     <option value="" style='display:none;' @if(empty($area_id)) selected @endif>選択してください</option>
                     @foreach($areas as $area)
-                      <option value="{{ $area->id }}" @if($area_id == $area->id) selected @endif>{{ $area->name }}</option>
+                      <option value="{{ $area->id }}" @if(!empty($area_id)) @if($area_id == $area->id) selected @endif @endif>{{ $area->name }}</option>
                     @endforeach
                   </select>
                 </div>
@@ -57,7 +57,7 @@
           <div class="row mb-2">
             <label for="keyword" class="col-md-2 col-form-label text-md-end">キーワード</label>
             <div class="col-md-9">
-              <input id="keyword" type="text" class="form-control" name="keyword" value={{ $keyword }}>
+              <input id="keyword" type="text" class="form-control" name="keyword" value="@if(!empty($keyword)) {{ $keyword }} @endif">
             </div>
           </div>
 

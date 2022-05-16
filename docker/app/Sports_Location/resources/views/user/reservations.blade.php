@@ -32,16 +32,16 @@
             </div>
             <div class="col-12">
               @if (!empty($reservation->event->user->username))
-              開催者：<span><a href="#">{{ $reservation->event->user->username }}</a></span>
+              開催者：<span><a href="{{ route('user.show', ['username'=>$reservation->event->user->username]) }}">{{ $reservation->event->user->username }}</a></span>
               @else
               開催者：<span>退会済みユーザー</a></span>
               @endif
             </div>
             <div class="col-12">
-              エリア：<span><a href="#">{{ $reservation->event->area->name }}</a></span>
+              エリア：<span><a href="{{ route('area.show', ['area_id'=>$reservation->event->area->id]) }}">{{ $reservation->event->area->name }}</a></span>
             </div>
             <div class="col-12">
-              ジャンル：<span><a href="#">{{ $reservation->event->genre->genre_name }}</a></span>
+              ジャンル：<span><a href="{{ route('genre.show', ['genre_id'=>$reservation->event->genre->id]) }}">{{ $reservation->event->genre->genre_name }}</a></span>
             </div>
           </div>
           <div class="col-md-2 d-flex align-items-center">

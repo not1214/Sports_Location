@@ -4,7 +4,7 @@
 
 <div class="container">
     
-    @if($event->status == '0' || empty($event->user->username) || $event->deadline < \Carbon\Carbon::today())
+    @if($event->status == '0' || empty($event->user->username) || $event->deadline < \Carbon\Carbon::now())
         <div class="row mb-3 align-items-center text-white bg-danger">
             <div class="text-center p-3">募集は終了しました。</div>
         </div>
@@ -29,10 +29,10 @@
                 <a href="{{ route('events.reservations.index', ['event'=>$event->id]) }}" class="btn btn-success col-md-3">予約申請一覧</a>
                 <a href="/events/{{ $event->id }}/edit" class="btn btn-primary col-md-3 ms-2 @if($event->date < Carbon\Carbon::today()) disabled @endif">編集する</a>
             @else
-              @if($event->deadline < Carbon\Carbon::today() && !empty($joined_event))
+              @if($event->deadline < Carbon\Carbon::now() && !empty($joined_event))
                 <a href="#" class="col-md-3 btn btn-primary">レビューする</a>
               @else
-                <a href="{{ route('events.reservations.create', ['event'=>$event->id]) }}" class="col-md-3 btn btn-primary @if($event->status == '0' || empty($event->user->username)) disabled @endif">応募する</a>
+                <a href="{{ route('events.reservations.create', ['event'=>$event->id]) }}" class="col-md-3 btn btn-primary @if($event->status == '0' || empty($event->user->username) || $event->deadline < \Carbon\Carbon::now()) disabled @endif">応募する</a>
                 @if($favorite)
                 <a href="{{ route('event.unfavorite', ['event' => $event->id ]) }}" class="col-md-3 btn btn-warning"><i class="fa-solid fa-star"></i></a>
                 @else
@@ -47,7 +47,7 @@
         <label for="genre" class="col-md-4 text-md-end">{{ __('Genre') }}</label>
 
         <div class="col-md-6 offset-md-1">
-            {{ $event->genre->genre_name }}
+        <a href="{{ route('genre.show', ['genre_id'=>$event->genre->id]) }}">{{ $event->genre->genre_name }}</a>
         </div>
     </div>
 
@@ -55,7 +55,7 @@
         <label for="area" class="col-md-4 text-md-end">{{ __('Area') }}</label>
 
         <div class="col-md-6 offset-md-1">
-            {{ $event->area->name }}
+        <a href="{{ route('area.show', ['area_id'=>$event->area->id]) }}">{{ $event->area->name }}</a>
         </div>
     </div>
 

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark shadow-sm">
+<nav class="navbar navbar-expand-md navbar-dark shadow-sm" style="background-color: #26d0c9">
   <div class="container">
       <a class="navbar-brand" href="{{ url('/') }}">
           {{ config('app.name') }}
@@ -29,11 +29,16 @@
                       </a>
 
                       <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                          <a class="dropdown-item border-bottom" href="{{ route('admin.events.index') }}">イベント</a>
+                          <a class="dropdown-item border-bottom" href="{{ route('admin.user.index') }}">ユーザー</a>
+                          <a class="dropdown-item border-bottom" href="{{ route('admin.genres.index') }}">ジャンル</a>
+
                           <a class="dropdown-item" href="{{ route('admin.logout') }}"
                               onclick="event.preventDefault();
                                             document.getElementById('logout-form').submit();">
                               {{ __('Logout') }}
                           </a>
+
 
                           <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" class="d-none">
                               @csrf

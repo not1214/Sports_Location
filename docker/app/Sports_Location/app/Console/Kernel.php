@@ -13,9 +13,15 @@ class Kernel extends ConsoleKernel
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
+
+    protected $commands = [
+        \App\Console\Commands\ChangeStatus::class
+    ];
+
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        $schedule->command('change:status')->everyThirtyMinutesMinutes()->unlessBetween('00:00', '6:00');
     }
 
     /**

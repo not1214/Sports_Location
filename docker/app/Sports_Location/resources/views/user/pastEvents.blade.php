@@ -38,10 +38,10 @@
               @endif
             </div>
             <div class="col-12">
-              エリア：<span><a href="#">{{ $event->area->name }}</a></span>
+              エリア：<span><a href="{{ route('area.show', ['area_id'=>$event->area->id]) }}">{{ $event->area->name }}</a></span>
             </div>
             <div class="col-12">
-              ジャンル：<span><a href="#">{{ $event->genre->genre_name }}</a></span>
+              ジャンル：<span><a href="{{ route('genre.show', ['genre_id'=>$event->genre->id]) }}">{{ $event->genre->genre_name }}</a></span>
             </div>
           </div>
           <div class="col-md-3 d-flex align-items-center">

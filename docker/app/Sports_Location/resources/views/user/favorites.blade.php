@@ -36,10 +36,10 @@
                 @endif
               </div>
               <div class="col-12">
-                エリア：<span><a href="#">{{ $favorite->event->area->name }}</a></span>
+                エリア：<span><a href="{{ route('area.show', ['area_id'=>$favorite->event->area->id]) }}">{{ $favorite->event->area->name }}</a></span>
               </div>
               <div class="col-12">
-                ジャンル：<span><a href="#">{{ $favorite->event->genre->genre_name }}</a></span>
+                ジャンル：<span><a href="{{ route('genre.show', ['genre_id'=>$favorite->event->genre->id]) }}">{{ $favorite->event->genre->genre_name }}</a></span>
               </div>
             </div>
           </div>

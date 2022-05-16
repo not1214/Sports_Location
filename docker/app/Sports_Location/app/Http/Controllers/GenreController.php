@@ -14,6 +14,6 @@ class GenreController extends Controller
         $genres = Genre::all();
         $areas = Area::all();
         $events = Event::where('genre_id', $genre_id)->latest()->get();
-        return view('event/index', compact('genres', 'areas', 'events'));
+        return view('event/index', compact('genres', 'areas', 'events', 'genre_id'));
     }
 }

@@ -77,7 +77,7 @@
         <form action="{{ route('events.reservations.destroy', ['event'=>$event->id, 'reservation'=>$reservation->id]) }}" method="post">
           @method('delete')
           @csrf
-          <button class="col-md-2 btn btn-danger" onclick='return confirm("応募を取り消しますか？");'>取り消し</button>
+          <button class="col-md-2 btn btn-danger @if($event->deadline < \Carbon\Carbon::now()) disabled @endif" onclick='return confirm("応募を取り消しますか？");'>取り消し</button>
         </form>
       </div>
     

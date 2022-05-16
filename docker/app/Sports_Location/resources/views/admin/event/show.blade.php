@@ -19,7 +19,7 @@
         </div>
         <div class="col-md-6 my-auto">
             @if(!empty($event->user->username))
-            <div class="mb-3">開催者：{{ $event->user->username }}</div>
+            <div class="mb-3">開催者：<a href="{{ route('admin.user.show', ['username'=>$event->user->username]) }}">{{ $event->user->username }}</a></div>
             @else
             <div class="mb-3">開催者：退会済みユーザー</div>
             @endif
@@ -32,7 +32,7 @@
         <label for="genre" class="col-md-4 text-md-end">{{ __('Genre') }}</label>
 
         <div class="col-md-6 offset-md-1">
-            {{ $event->genre->genre_name }}
+            <a href="{{ route('admin.genre.show', ['genre_id'=>$event->genre->id]) }}">{{ $event->genre->genre_name }}</a>
         </div>
     </div>
 
@@ -40,7 +40,7 @@
         <label for="area" class="col-md-4 text-md-end">{{ __('Area') }}</label>
 
         <div class="col-md-6 offset-md-1">
-            {{ $event->area->name }}
+            <a href="{{ route('admin.area.show', ['area_id'=>$event->area->id]) }}">{{ $event->area->name }}</a>
         </div>
     </div>
 
