@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
+use App\Http\Requests\UpdateUser;
 use App\Models\User;
 use App\Models\Event;
 use App\Models\Reservation;
@@ -36,7 +37,7 @@ class UserController extends Controller
         return view('admin.user.edit', compact('user'));
     }
 
-    public function update($username, Request $request)
+    public function update($username, UpdateUser $request)
     {
         $user = User::where('username', $username)->firstOrFail();
         $user->username = $request->username;

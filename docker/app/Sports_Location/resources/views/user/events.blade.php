@@ -6,12 +6,16 @@
     
     <div class="col-md-3 me-3 text-center">
       @if(isset($user->profile_image))
-      <img src="{{ asset($user->profile_image) }}" class="profile-image">
+        <img src="{{ asset($user->profile_image) }}" class="profile-image">
       @else
-      <img src="{{ asset('images/no-image(user).jpg') }}" class="profile-image">
+        <img src="{{ asset('images/no-image(user).jpg') }}" class="profile-image">
       @endif
-      <h4 class="mt-3">{{ $user->username }}</h4>
-      <a href="{{ route('user.edit') }}" class="col-10 btn btn-outline-secondary mt-5"><i class="fa-solid fa-user-pen"></i></a>
+        <h4 class="mt-3">{{ $user->username }}</h4>
+      @if($follow)
+        <a href="{{ route('user.unFollow', ['username'=>$user->username]) }}" class="col-10 btn btn-primary mt-5"><i class="fa-solid fa-user-check"></i></a>
+      @else
+        <a href="{{ route('user.follow', ['username'=>$user->username]) }}" class="col-10 btn btn-outline-secondary mt-5"><i class="fa-solid fa-user-plus"></i></a>
+      @endif
     </div>
     
     <div class="col-md-8">
@@ -20,9 +24,9 @@
         @foreach ($events as $event)
           <div class="row mb-3">
             @if(isset($event->event_image))
-              <img class="col-md-2 me-2" src="{{ asset($event->event_image) }}" style="border-radius:30%;">
+              <img class="event-index-image col-md-2 me-2" src="{{ asset($event->event_image) }}" style="border-radius:30%;">
             @else
-              <img class="col-md-2 me-2" src="{{ asset('images/no-image.png') }}">
+              <img class="event-index-image col-md-2 me-2" src="{{ asset('images/no-image.png') }}">
             @endif
             <div class="col-md-8">
               <div class="col-12">

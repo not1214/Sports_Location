@@ -40,10 +40,14 @@
       </div>
       <form action="{{ route('events.reservations.store', ['event'=>$event->id]) }}" method="post" name="form">
       @csrf
-        <div class="row">
+        <div class="row mb-5">
           <label for="comment">コメント</label>
-          <textarea id="comment" name="comment" class="form-control mb-5"></textarea>
+          <textarea id="comment" name="comment" class="form-control"></textarea>
+          @error('comment')
+            <p class="text-danger">{{ $message }}</p>
+          @enderror
         </div>
+
         <div class="row justify-content-center">
           <button type="submit" name="apply" class="col-md-3 btn btn-primary">応募する</button>
           <a href="{{ route('events.show', ['event'=>$event->id]) }}" class="col-md-3 offset-md-1 btn btn-danger">キャンセル</a>

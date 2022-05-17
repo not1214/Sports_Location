@@ -41,11 +41,13 @@
         <p class="introduction ps-md-5">{!! nl2br(e($user->introduction)) !!}</p>
       </div>
       <div class="row mt-5 justify-content-center">
-        <a href="{{ route('user.createdEvents') }}" class="btn btn-info col-10 col-md-5 me-md-3">作成イベント一覧</a>
         @if($target == 'mine')
+        <a href="{{ route('user.createdEvents') }}" class="btn btn-info col-10 col-md-5 me-md-3">作成イベント一覧</a>
         <a href="{{ route('user.favoriteEvents') }}" class="btn btn-info col-10 col-md-5 me-md-3 mt-2 mt-md-0">お気に入りイベント一覧</a>
         <a href="{{ route('user.pastEvents') }}" class="btn btn-info col-10 col-md-5 me-md-3 mt-2">参加済みイベント一覧</a>
         <a href="{{ route('user.reservedEvents') }}" class="btn btn-info col-10 col-md-5 me-md-3 mt-2">予約済みイベント一覧</a>
+        @else
+        <a href="{{ route('user.events', ['username'=>$user->username]) }}" class="btn btn-info col-10 col-md-5 me-md-3">作成イベント一覧</a>
         @endif
       </div>
     </div>

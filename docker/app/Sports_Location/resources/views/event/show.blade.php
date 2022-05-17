@@ -27,14 +27,14 @@
             <h3 class="mb-3">{{ $event->title }}</h3>
             @if(Auth::id() == $event->user_id)
                 <a href="{{ route('events.reservations.index', ['event'=>$event->id]) }}" class="btn btn-success col-md-3">予約申請一覧</a>
-                <a href="/events/{{ $event->id }}/edit" class="btn btn-primary col-md-3 ms-2 @if($event->date < Carbon\Carbon::today()) disabled @endif">編集する</a>
+                <a href="/events/{{ $event->id }}/edit" class="btn btn-primary col-md-3 ms-2 @if($event->deadline < Carbon\Carbon::now()) disabled @endif">編集する</a>
             @else
               @if($event->deadline < Carbon\Carbon::now() && !empty($joined_event))
                 <a href="#" class="col-md-3 btn btn-primary">レビューする</a>
               @else
-                <a href="{{ route('events.reservations.create', ['event'=>$event->id]) }}" class="col-md-3 btn btn-primary @if($event->status == '0' || empty($event->user->username) || $event->deadline < \Carbon\Carbon::now()) disabled @endif">応募する</a>
+                <a href="{{ route('events.reservations.create', ['event'=>$event->id]) }}" class="col-md-3 btn btn-primary @if($event->status == '0' || empty($event->user->username) || $event->deadline < \Carbon\Carbon::now() || !empty($reserved_check)) disabled @endif">応募する</a>
                 @if($favorite)
-                <a href="{{ route('event.unfavorite', ['event' => $event->id ]) }}" class="col-md-3 btn btn-warning"><i class="fa-solid fa-star"></i></a>
+                <a href="{{ route('event.unfavorite', ['event' => $event->id ]) }}" class="col-md-3 ms-2 btn btn-warning"><i class="fa-solid fa-star"></i></a>
                 @else
                 <a href="{{ route('event.favorite', ['event' => $event->id ]) }}" class="col-md-3 ms-2 btn btn-warning"><i class="fa-regular fa-star"></i></a>
                 @endif

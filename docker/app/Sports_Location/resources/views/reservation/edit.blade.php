@@ -65,10 +65,13 @@
             </select>
           </div>
         </div>
-        <div class="row">
+        <div class="row mb-5">
           <div>
             <label for="reply">返信コメント：</label>
-            <textarea id="reply" name="reply" class="form-control mb-5"></textarea>
+            <textarea id="reply" name="reply" class="form-control">{{ old('reply', $reservation->reply) }}</textarea>
+            @error('reply')
+              <p class="text-danger">{{ $message }}</p>
+            @enderror
           </div>
         </div>
         <div class="row justify-content-center">

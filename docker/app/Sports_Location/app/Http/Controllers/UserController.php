@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
+use App\Http\Requests\UpdateUser;
 use App\Models\User;
 use App\Models\Event;
 use App\Models\Reservation;
@@ -29,7 +30,7 @@ class UserController extends Controller
         return view('user/edit', compact('user'));
     }
 
-    public function update(Request $request)
+    public function update(UpdateUser $request)
     {
         $user = Auth::user();
         $user->username = $request->username;
@@ -64,7 +65,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
         $events = Event::whereUserId($user->id)->get();
-        return view('user.events', compact('user', 'events'));
+        return view('user.createdEvents', compact('user', 'events'));
     }
 
     public function pastEvents()
@@ -106,6 +107,9 @@ class UserController extends Controller
 
     public function follow($username)
     {
+        if ($username == Auth::user()->username) {
+            return redirect()->route('user.myPage');
+        }
         $user = User::whereUsername($username)->first();
         $follow = new Relationship();
         $follow->following_id = Auth::user()->id;
@@ -116,6 +120,9 @@ class UserController extends Controller
 
     public function unFollow($username)
     {
+        if ($username == Auth::user()->username) {
+            return redirect()->route('user.myPage');
+        }
         $user = User::whereUsername($username)->first();
         $follow = Relationship::where('following_id', Auth::user()->id)
                   ->where('followed_id', $user->id)->first();
@@ -137,9 +144,13 @@ class UserController extends Controller
 
     public function events($username)
     {
-        $user = User::whereUsername($username)->first();
-        $events = Event::whereUserId($user)->get();
-        return view('user.events', compact('user', 'events'));
+        if ($username == Auth::user()->username) {
+            return redirect()->route('user.createdEvents');
+        }
+        $user = User::whereUsername($username)->firstOrFail();
+        $events = Event::whereUserId($user->id)->get();
+        $follow = Relationship::where([['following_id', Auth::user()->id], ['followed_id', $user->id]])->first();
+        return view('user.events', compact('user', 'events', 'follow'));
     }
 
     public function followings($username)

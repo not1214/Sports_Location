@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
+use App\Http\Requests\CreateReservation;
 use App\Models\Event;
 use App\Models\Reservation;
 
@@ -22,14 +24,13 @@ class ReservationController extends Controller
 
     public function create(Event $event)
     {
-        if ($event->user_id == Auth::user()->id) {
+        if ($event->user_id == Auth::user()->id || $event->deadline < Carbon::now()) {
             return redirect()->route('events.show', ['event' => $event->id]);
         }
-
         return view('reservation/create', compact('event'));
     }
 
-    public function store(Request $request, Event $event)
+    public function store(CreateReservation $request, Event $event)
     {
         if ($event->user_id == Auth::user()->id) {
             return redirect()->route('events.show', ['event' => $event->id]);
@@ -64,7 +65,7 @@ class ReservationController extends Controller
         return view('reservation/edit', compact('reservation', 'event'));
     }
 
-    public function update(Event $event, Request $request, $id)
+    public function update(CreateReservation $event, Request $request, $id)
     {
         if ($event->user_id != Auth::user()->id) {
             return redirect()->route('events.show', ['event' => $event->id]);

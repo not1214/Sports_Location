@@ -7,11 +7,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\CreateEvent;
 use App\Models\Event;
 use App\Models\Area;
 use App\Models\Genre;
 use App\Models\User;
 use App\Models\Favorite;
+use App\Models\Reservation;
 
 class EventController extends Controller
 {
@@ -56,7 +58,7 @@ class EventController extends Controller
         return view('event/create', compact('event', 'areas', 'genres'));
     }
 
-    public function createConfirm(Request $request)
+    public function createConfirm(CreateEvent $request)
     {
         $data = $request->except('image');
 
@@ -83,7 +85,7 @@ class EventController extends Controller
     public function store(Request $request)
     {
         if ($request->get('back')) {
-            return redirect('/events/create')->withInput();
+            return redirect()->route('events.create')->withInput();
         }
 
         $event = new Event;
@@ -133,7 +135,8 @@ class EventController extends Controller
         $joined_event  = DB::table('events')->join('reservations', 'events.id', '=', 'reservations.event_id')
                          ->where([['reservations.user_id', Auth::user()->id], ['permission', '2'], ['event_id', '=', $event->id]])
                          ->first();
-        return view('event/show', compact('event', 'favorite', 'joined_event'));
+        $reserved_check = Reservation::where([['event_id', $event->id], ['user_id', Auth::user()->id]])->get();
+        return view('event/show', compact('event', 'favorite', 'joined_event', 'reserved_check'));
     }
 
     /**
@@ -145,7 +148,7 @@ class EventController extends Controller
     public function edit($id)
     {
         $event = Event::findOrFail($id);
-        if ($event->date < Carbon::today() || $event->user_id != Auth::user()->id) {
+        if ($event->deadline < Carbon::now() || $event->user_id != Auth::user()->id) {
             return redirect()->route('events.show', ['event'=>$event->id]);
         }
 
@@ -154,7 +157,7 @@ class EventController extends Controller
         return view('event/edit', compact('event', 'areas', 'genres'));
     }
 
-    public function editConfirm(Request $request, Event $event)
+    public function editConfirm(CreateEvent $request, Event $event)
     {
         $data = $request->except('image');
 

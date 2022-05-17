@@ -22,6 +22,7 @@ Route::get('events', 'App\Http\Controllers\EventController@index')->name('events
 
 Route::get('/contact', 'App\Http\Controllers\ContactController@form')->name('contact.form');
 Route::post('/contact/confirm', 'App\Http\Controllers\ContactController@confirm')->name('contact.confirm');
+Route::get('/contact/confirm', function () { abort(404); });
 Route::post('/contact/send', 'App\Http\Controllers\ContactController@send')->name('contact.send');
 Route::get('/contact/complete', 'App\Http\Controllers\ContactController@complete')->name('contact.complete');
 
@@ -38,6 +39,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin', 'as' => 'admin.
 
     Route::resource('events', 'App\Http\Controllers\Admin\EventController', ['except' => ['create', 'store', 'destroy']]);
     Route::post('events/{event}/edit/confirm', [\App\Http\Controllers\Admin\EventController::class, 'confirm'])->name('events.confirm');
+    Route::get('events/{event}/edit/confirm', function () { abort(404); });
 
     Route::get('users', 'App\Http\Controllers\Admin\UserController@index')->name('user.index');
     Route::get('users/{username}', 'App\Http\Controllers\Admin\UserController@show')->name('user.show');
@@ -49,6 +51,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin', 'as' => 'admin.
     Route::get('users/{username}/followers', 'App\Http\Controllers\Admin\UserController@followers')->name('user.followers');
     Route::get('users/{username}/unsubscribe', 'App\Http\Controllers\Admin\UserController@unsubscribe')->name('user.unsubscribe');
     Route::post('users/{username}/withdraw', 'App\Http\Controllers\Admin\UserController@withdraw')->name('user.withdraw');
+    Route::get('users/{username}/withdraw', function () { abort(404); });
 
     Route::get('events/area/{area_id}', 'App\Http\Controllers\Admin\AreaController@show')->name('area.show');
     Route::resource('genres', 'App\Http\Controllers\Admin\GenreController', ['only' => ['index', 'store', 'edit', 'update']]);
@@ -59,7 +62,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin', 'as' => 'admin.
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('events', 'App\Http\Controllers\EventController', ['except' => ['index']]);
     Route::post('events/create/confirm', [\App\Http\Controllers\EventController::class, 'createConfirm'])->name('events.create_confirm');
+    Route::get('events/create/confirm', function () { abort(404); });
     Route::post('events/{event}/edit/confirm', [\App\Http\Controllers\EventController::class, 'editConfirm'])->name('events.edit_confirm');
+    Route::get('events/{event}/edit/confirm', function () { abort(404); });
     Route::get('events/{event}/favorite', 'App\Http\Controllers\EventController@favorite')->name('event.favorite');
     Route::get('events/{event}/unfavorite', 'App\Http\Controllers\EventController@unfavorite')->name('event.unfavorite');
 
@@ -68,6 +73,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put('myPage', 'App\Http\Controllers\UserController@update')->name('user.update');
     Route::get('myPage/unsubscribe', 'App\Http\Controllers\UserController@unsubscribe')->name('user.unsubscribe');
     Route::post('myPage/withdraw', 'App\Http\Controllers\UserController@withdraw')->name('user.withdraw');
+    Route::get('myPage/withdraw', function () { abort(404); });
     Route::get('myPage/events', 'App\Http\Controllers\UserController@createdEvents')->name('user.createdEvents');
     Route::get('myPage/pastEvents', 'App\Http\Controllers\UserController@pastEvents')->name('user.pastEvents');
     Route::get('myPage/reservations', 'App\Http\Controllers\UserController@reservedEvents')->name('user.reservedEvents');

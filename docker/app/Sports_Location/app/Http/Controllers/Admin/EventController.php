@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\CreateEvent;
 use App\Models\Event;
 use App\Models\Genre;
 use App\Models\Area;
@@ -57,8 +58,12 @@ class EventController extends Controller
         return view('admin/event/edit', compact('event', 'areas', 'genres'));
     }
 
-    public function confirm(Request $request, Event $event)
+    public function confirm(CreateEvent $request, Event $event)
     {
+        if (empty($request)) {
+            return redirect()->route('events.show', ['event' => $event->id]);
+        }
+        
         $data = $request->except('image');
 
         if (!empty($request->image)) {

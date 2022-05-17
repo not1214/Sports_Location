@@ -22,9 +22,9 @@
       @foreach ($events as $event)
         <div class="row mb-3">
           @if(isset($event->event_image))
-            <img class="col-md-2 me-2" src="{{ asset($event->event_image) }}" style="border-radius:30%;">
+            <img class="event-index-image col-md-2 me-2" src="{{ asset($event->event_image) }}" style="border-radius:30%;">
           @else
-            <img class="col-md-2 me-2" src="{{ asset('images/no-image.png') }}">
+            <img class="event-index-image col-md-2 me-2" src="{{ asset('images/no-image.png') }}">
           @endif
           <div class="col-md-6">
             <div class="col-12">

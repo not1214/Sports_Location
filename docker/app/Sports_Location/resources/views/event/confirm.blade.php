@@ -1,16 +1,16 @@
 <div class="container">
-    
+
     <h3 class="text-center mb-3">イベントを確認</h3>
     @if($target == 'create_confirm')
-    <form method="post" action="/events">
+    <form method="post" action="{{ route('events.store') }}">
     @elseif($target == 'edit_confirm')
-    <form method="post" action="/events/{{ $event->id }}">
+    <form method="post" action="{{ route('events.update', ['event'=>$event->id]) }}">
     @method('patch')
     @endif
         @csrf
         @if($data['status'] == '0')
-            <div class="row mb-3 text-center text-danger">
-                募集は終了しました。
+            <div class="row mb-3 align-items-center text-white bg-danger">
+                <div class="text-center p-3">募集は終了しました。</div>
             </div>
         @endif
 
