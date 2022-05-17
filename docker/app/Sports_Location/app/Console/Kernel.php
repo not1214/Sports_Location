@@ -21,7 +21,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->command('change:status')->everyThirtyMinutesMinutes()->unlessBetween('00:00', '6:00');
+        $schedule->command('change:status')->everyThirtyMinutes()->unlessBetween('00:00', '6:00');
     }
 
     /**
