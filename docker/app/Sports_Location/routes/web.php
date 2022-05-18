@@ -26,6 +26,8 @@ Route::get('/contact/confirm', function () { abort(404); });
 Route::post('/contact/send', 'App\Http\Controllers\ContactController@send')->name('contact.send');
 Route::get('/contact/complete', 'App\Http\Controllers\ContactController@complete')->name('contact.complete');
 
+Route::get('/rule', 'App\Http\Controllers\HomeController@rule');
+
 //Admin認証不要
 Route::group(['prefix' => 'admin'], function () {
     Route::get('login', [App\Http\Controllers\Admin\LoginController::class, 'showLoginForm'])->name('admin.login');

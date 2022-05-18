@@ -19,7 +19,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::all();
+        $users = User::withTrashed()->latest()->paginate(10);
         return view('admin.user.index', compact('users'));
     }
 
@@ -58,21 +58,21 @@ class UserController extends Controller
     public function followings($username)
     {
         $user = User::where('username', $username)->firstOrFail();
-        $followings = $user->following()->get();
+        $followings = $user->following()->latest();
         return view('admin.user.following', compact('user', 'followings'));
     }
 
     public function followers($username)
     {
         $user = User::where('username', $username)->firstOrFail();
-        $followers = $user->followed()->get();
+        $followers = $user->followed()->latest();
         return view('admin.user.follower', compact('user', 'followers'));
     }
 
     public function createdEvents($username)
     {
         $user = User::where('username', $username)->firstOrFail();
-        $events = Event::whereUserId($user->id)->get();
+        $events = Event::whereUserId($user->id)->latest()->paginate(10);
         return view('admin.user.events', compact('user', 'events'));
     }
 
@@ -81,7 +81,7 @@ class UserController extends Controller
         $user = User::where('username', $username)->firstOrFail();
         $events = Event::Join('reservations', 'events.id', '=', 'reservations.event_id')
                   ->where([['reservations.user_id', $user->id], ['permission', '2'], ['date', '<', Carbon::today()]])
-                  ->get();
+                  ->latest()->paginate(10);
         return view('admin.user.pastEvents', compact('user', 'events'));
     }
 

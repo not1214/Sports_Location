@@ -74,6 +74,7 @@
             @enderror
           </div>
         </div>
+        <input type="hidden" value="{{ $reservation->comment }}" name="comment">
         <div class="row justify-content-center">
           <button type="submit" name="update" class="col-md-3 btn btn-primary">更新する</button>
           <a href="{{ route('events.reservations.index', ['event'=>$event->id]) }}" class="col-md-3 offset-md-1 btn btn-dark">一覧へ戻る</a>

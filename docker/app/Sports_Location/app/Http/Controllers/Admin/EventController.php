@@ -35,7 +35,7 @@ class EventController extends Controller
             $query->where('title', 'like', '%'. $keyword. '%');
         }
 
-        $events = $query->latest()->get();
+        $events = $query->latest()->paginate(5);
         $genres = Genre::all();
         $areas = Area::all();
         return view('admin/event/index', compact('events', 'genres', 'areas', 'genre_id', 'area_id', 'keyword'));

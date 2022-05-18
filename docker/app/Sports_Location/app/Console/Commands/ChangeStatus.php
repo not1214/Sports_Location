@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\Event;
 use App\Models\User;
+use App\Models\Reservation;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
 
@@ -45,7 +46,8 @@ class ChangeStatus extends Command
 
         $events = Event::all();
         foreach ($events as $event) {
-            if ($event->deadline < Carbon::now()) {
+            $number = Reservation::where('event_id', $event->id)->count();
+            if ($event->deadline < Carbon::now() || $event->number <= $number) {
                 $event->status = 0;
                 $event->save();
             }

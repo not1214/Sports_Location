@@ -26,7 +26,7 @@ class CreateReservation extends FormRequest
         return [
             'comment' => 'required|max:500',
             'permission' => 'integer',
-            'reply' => 'max:500',
+            'reply' => 'required|max:500',
         ];
     }
 }

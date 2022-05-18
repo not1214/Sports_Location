@@ -39,7 +39,7 @@
         <h3>応募申請一覧（{{ count($reservations) }}件）</h3>
       </div>
       @foreach($reservations as $reservation)
-      <div class="row mb-3 pb-1 border-bottom">
+        <div class="row mb-3 pb-1 border-bottom">
           @if(isset($reservation->user->profile_image))
             <img class="col-md-1 me-2" src="{{ asset($reservation->user->profile_image) }}" style="border-radius:50%;">
           @else
@@ -54,6 +54,9 @@
           </div>
         </div>
       @endforeach
+      <div class="row">
+        <div class="d-flex justify-content-center">{{ $reservations->links() }}</div>
+      </div>
     </div>
 
   </div>

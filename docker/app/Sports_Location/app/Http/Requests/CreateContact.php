@@ -25,7 +25,7 @@ class CreateContact extends FormRequest
     {
         return [
             'name' => 'required|string|max:15',
-            'email' => 'required|email',
+            'email' => 'required|email|max:100',
             'subject' => 'max:50',
             'body' => 'required|max:500',
         ];

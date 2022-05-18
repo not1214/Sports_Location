@@ -39,7 +39,7 @@ class EventController extends Controller
             $query->where('title', 'like', '%'. $keyword. '%');
         }
 
-        $events = $query->latest()->get();
+        $events = $query->latest()->paginate(10);
         $genres = Genre::all();
         $areas = Area::all();
         return view('event/index', compact('events', 'genres', 'areas', 'genre_id', 'area_id', 'keyword'));
@@ -135,7 +135,7 @@ class EventController extends Controller
         $joined_event  = DB::table('events')->join('reservations', 'events.id', '=', 'reservations.event_id')
                          ->where([['reservations.user_id', Auth::user()->id], ['permission', '2'], ['event_id', '=', $event->id]])
                          ->first();
-        $reserved_check = Reservation::where([['event_id', $event->id], ['user_id', Auth::user()->id]])->get();
+        $reserved_check = Reservation::where([['event_id', $event->id], ['user_id', Auth::user()->id]])->first();
         return view('event/show', compact('event', 'favorite', 'joined_event', 'reserved_check'));
     }
 

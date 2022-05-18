@@ -64,7 +64,7 @@ class UserController extends Controller
     public function createdEvents()
     {
         $user = Auth::user();
-        $events = Event::whereUserId($user->id)->get();
+        $events = Event::whereUserId($user->id)->latest()->paginate(10);
         return view('user.createdEvents', compact('user', 'events'));
     }
 
@@ -73,35 +73,35 @@ class UserController extends Controller
         $user = Auth::user();
         $events = Event::Join('reservations', 'events.id', '=', 'reservations.event_id')
                   ->where([['reservations.user_id', $user->id], ['permission', '2'], ['date', '<', Carbon::today()]])
-                  ->get();
+                  ->latest()->paginate(10);
         return view('user.pastEvents', compact('user', 'events'));
     }
 
     public function reservedEvents()
     {
         $user = Auth::user();
-        $reservations = Reservation::whereUserId($user->id)->get();
+        $reservations = Reservation::whereUserId($user->id)->latest()->paginate(10);
         return view('user.reservations', compact('user', 'reservations'));
     }
 
     public function favoriteEvents()
     {
         $user = Auth::user();
-        $favorites = Favorite::whereUserId($user->id)->get();
+        $favorites = Favorite::whereUserId($user->id)->latest()->paginate(10);
         return view('user.favorites', compact('user', 'favorites'));
     }
 
     public function myFollowings()
     {
         $user = Auth::user();
-        $followings = $user->following()->get();
+        $followings = $user->following()->latest();
         return view('user.following', compact('user', 'followings'));
     }
 
     public function myFollowers()
     {
         $user = Auth::user();
-        $followers = $user->followed()->get();
+        $followers = $user->followed()->latest();
         return view('user.follower', compact('user', 'followers'));
     }
 
@@ -110,7 +110,7 @@ class UserController extends Controller
         if ($username == Auth::user()->username) {
             return redirect()->route('user.myPage');
         }
-        $user = User::whereUsername($username)->first();
+        $user = User::whereUsername($username)->firstOrFail();
         $follow = new Relationship();
         $follow->following_id = Auth::user()->id;
         $follow->followed_id = $user->id;
@@ -123,7 +123,7 @@ class UserController extends Controller
         if ($username == Auth::user()->username) {
             return redirect()->route('user.myPage');
         }
-        $user = User::whereUsername($username)->first();
+        $user = User::whereUsername($username)->firstOrFail();
         $follow = Relationship::where('following_id', Auth::user()->id)
                   ->where('followed_id', $user->id)->first();
         $follow->delete();
@@ -135,7 +135,7 @@ class UserController extends Controller
         if ($username == Auth::user()->username) {
             return redirect()->route('user.myPage');
         }
-        $user = User::whereUsername($username)->first();
+        $user = User::whereUsername($username)->firstOrFail();
         $follow = Relationship::where([['following_id', Auth::user()->id], ['followed_id', $user->id]])->first();
         $followings = Relationship::where('following_id', $user->id)->get();
         $followers = Relationship::where('followed_id', $user->id)->get();
@@ -148,23 +148,23 @@ class UserController extends Controller
             return redirect()->route('user.createdEvents');
         }
         $user = User::whereUsername($username)->firstOrFail();
-        $events = Event::whereUserId($user->id)->get();
+        $events = Event::whereUserId($user->id)->latest()->paginate(10);
         $follow = Relationship::where([['following_id', Auth::user()->id], ['followed_id', $user->id]])->first();
         return view('user.events', compact('user', 'events', 'follow'));
     }
 
     public function followings($username)
     {
-        $user = User::whereUsername($username)->first();
-        $followings = $user->following()->get();
+        $user = User::whereUsername($username)->firstOrFail();
+        $followings = $user->following()->latest();
         $follow = Relationship::where([['following_id', Auth::user()->id], ['followed_id', $user->id]])->first();
         return view('user.following', compact('user', 'followings', 'follow'));
     }
 
     public function followers($username)
     {
-        $user = User::whereUsername($username)->first();
-        $followers = $user->followed()->get();
+        $user = User::whereUsername($username)->firstOrFail();
+        $followers = $user->followed()->latest();
         $follow = Relationship::where([['following_id', Auth::user()->id], ['followed_id', $user->id]])->first();
         return view('user.follower', compact('user', 'followers', 'follow'));
     }

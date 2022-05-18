@@ -49,6 +49,9 @@
           </div>
         </div>
       @endforeach
+      <div class="row">
+        <div class="d-flex justify-content-center">{{ $events->links() }}</div>
+      </div>
     </div>
 
   </div>

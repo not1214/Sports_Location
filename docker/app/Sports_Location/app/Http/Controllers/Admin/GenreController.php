@@ -20,7 +20,7 @@ class GenreController extends Controller
     {
         $genres = Genre::all();
         $areas = Area::all();
-        $events = Event::where('genre_id', $genre_id)->latest()->get();
+        $events = Event::where('genre_id', $genre_id)->latest()->paginate(10);
         return view('admin/event/index', compact('genres', 'areas', 'events', 'genre_id'));
     }
 

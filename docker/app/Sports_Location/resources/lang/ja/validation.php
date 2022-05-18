@@ -193,6 +193,7 @@ return [
             'reply' => '返信コメント',
             'password' => 'パスワード',
             'birthday' => '生年月日',
+            'tel' => '電話番号',
     ],
 
     'values' => [

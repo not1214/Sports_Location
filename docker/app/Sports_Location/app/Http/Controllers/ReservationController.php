@@ -18,7 +18,7 @@ class ReservationController extends Controller
             return redirect()->route('events.show', ['event' => $event->id]);
         }
 
-        $reservations = Reservation::where('event_id', $event->id)->get();
+        $reservations = Reservation::where('event_id', $event->id)->latest()->paginate(10);
         return view('reservation/index', compact('reservations', 'event'));
     }
 
@@ -40,6 +40,7 @@ class ReservationController extends Controller
         $reservation->user_id = Auth::user()->id;
         $reservation->event_id = $event->id;
         $reservation->comment = $request->comment;
+        $reservation->reply = $request->reply;
         $reservation->save();
 
         return redirect()->route('user.reservedEvents');
@@ -65,14 +66,14 @@ class ReservationController extends Controller
         return view('reservation/edit', compact('reservation', 'event'));
     }
 
-    public function update(CreateReservation $event, Request $request, $id)
+    public function update(Event $event, CreateReservation $request, $id)
     {
         if ($event->user_id != Auth::user()->id) {
             return redirect()->route('events.show', ['event' => $event->id]);
         }
 
         $reservation = Reservation::find($id);
-
+        $reservation->comment = $request->comment;
         $reservation->permission = $request->permission;
         $reservation->reply = $request->reply;
         $reservation->save();

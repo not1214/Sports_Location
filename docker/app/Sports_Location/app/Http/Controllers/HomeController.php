@@ -32,4 +32,9 @@ class HomeController extends Controller
         $events = Event::orderBy('created_at', 'DESC')->take(5)->get();
         return view('top', compact('events'));
     }
+
+    public function rule()
+    {
+        return view('rule');
+    }
 }

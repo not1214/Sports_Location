@@ -30,5 +30,9 @@
       </table>
     </div>
   </div>
+
+  <div class="row">
+    <div class="d-flex justify-content-center">{{ $users->links() }}</div>
+  </div>
 </div>
 @endsection

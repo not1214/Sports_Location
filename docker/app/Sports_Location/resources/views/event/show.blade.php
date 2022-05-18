@@ -20,7 +20,7 @@
         </div>
         <div class="col-md-6 my-auto">
             @if(!empty($event->user->username))
-            <div class="mb-3">開催者：{{ $event->user->username }}</div>
+            <div class="mb-3">開催者：<a href="{{ route('user.show', ['username'=>$event->user->username]) }}">{{ $event->user->username }}</a></div>
             @else
             <div class="mb-3">開催者：退会済みユーザー</div>
             @endif

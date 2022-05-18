@@ -5,7 +5,7 @@
     <div style="float:right">
         <ul style="list-style:none;">
             <li><a href="{{ route('contact.form') }}">お問い合わせ</a></li>
-            <li><a href="#">利用ルール</a></li>
+            <li><a href="/rule">利用ルール</a></li>
         </ul>
     </div>
     <div class="text-center pt-2">Copyright Sports Location. All rights reserved.</div>

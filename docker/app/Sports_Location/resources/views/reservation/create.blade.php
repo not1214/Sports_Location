@@ -47,7 +47,7 @@
             <p class="text-danger">{{ $message }}</p>
           @enderror
         </div>
-
+        <input type="hidden" value="開催者様は必要事項を記入し、返信してください。" name="reply">
         <div class="row justify-content-center">
           <button type="submit" name="apply" class="col-md-3 btn btn-primary">応募する</button>
           <a href="{{ route('events.show', ['event'=>$event->id]) }}" class="col-md-3 offset-md-1 btn btn-danger">キャンセル</a>

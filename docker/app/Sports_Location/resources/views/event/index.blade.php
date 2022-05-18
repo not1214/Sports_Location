@@ -102,8 +102,12 @@
           </div>
         @endforeach
       </div>
+
+      <div class="row">
+        <div class="d-flex justify-content-center">{{ $events->links() }}</div>
+      </div>
     </div>
-  
+
   </div>
 </div>
 @endsection

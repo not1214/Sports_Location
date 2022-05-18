@@ -10,6 +10,8 @@
   @method('put')
   @csrf
   
+  <input type="hidden" value="{{ $user->id }}" name="user_id">
+
   <div class="row mb-3">
     <label for="profile_image" class="col-md-4 col-form-label text-md-end">{{ __('Profile_image') }}</label>
 
