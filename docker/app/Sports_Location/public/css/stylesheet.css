@@ -48,7 +48,7 @@ textarea {
 }
 
 .event-index-image {
-  height: 110px;
+  height: auto;
   border-radius: 30%;
 }
 
@@ -81,7 +81,7 @@ textarea {
   left: 0;
 }
 
-.top-image p{
+.top-image p {
   position: absolute;
   top: 50%;
   left: 50%;
