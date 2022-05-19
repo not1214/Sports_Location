@@ -24,17 +24,15 @@
 </head>
 
 <body>
-    <div id="app">
-        <header style="background-color: #26d0c9">
-            @include('layouts/header')
-        </header>
-        <main>
-            @yield('content')
-        </main>
-        <footer>
-            @include('layouts/footer')
-        </footer>
-    </div>
+    <header style="background-color: #26d0c9">
+        @include('layouts/header')
+    </header>
+    <main>
+        @yield('content')
+    </main>
+    <footer>
+        @include('layouts/footer')
+    </footer>
 </body>
 
 </html>

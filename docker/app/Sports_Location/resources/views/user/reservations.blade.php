@@ -28,7 +28,7 @@
         @endif
         <div class="col-md-7">
           <div class="col-12">
-            <a href="{{ route('events.show', ['event'=>$reservation->event->id]) }}" class="fs-3 fw-bold">{{ $reservation-> }}</a>
+            <a href="{{ route('events.show', ['event'=>$reservation->event->id]) }}" class="fs-3 fw-bold">{{ $reservation->event->title }}</a>
           </div>
           <div class="col-12">
             @if (!empty($reservation->event->user->username))
