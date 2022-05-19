@@ -27,6 +27,7 @@
       </div>
       @foreach ($followers as $follower)
         <div class="row mb-3 border-bottom">
+        @if($follower)
           @if(isset($follower->profile_image))
             <img class="col-md-1 me-2" src="{{ asset($follower->profile_image) }}" style="border-radius:50%;">
           @else
@@ -37,6 +38,7 @@
               <a href="{{ route('user.show', ['username'=>$follower->username]) }}" class="fs-4 fw-bold">{{ $follower->username }}</a>
             </div>
           </div>
+        @endif
         </div>
       @endforeach
     </div>
