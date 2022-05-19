@@ -27,6 +27,7 @@
       </div>
       @foreach ($followings as $following)
         <div class="row mb-3 border-bottom">
+        @if($following)
           @if(isset($following->profile_image))
             <img class="col-md-1 me-2" src="{{ asset($following->profile_image) }}" style="border-radius:50%;">
           @else
@@ -38,6 +39,7 @@
             </div>
           </div>
         </div>
+        @endif
       @endforeach
     </div>
 

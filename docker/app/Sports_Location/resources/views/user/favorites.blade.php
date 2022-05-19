@@ -26,7 +26,7 @@
             @endif
             <div class="col-md-8">
               <div class="col-12">
-                <a href="{{ route('events.show', ['event'=>$favorite->event_id]) }}" class="fs-3 fw-bold">{{ $favorite->event->title }}</a>
+                <a href="{{ route('events.show', ['event'=>$favorite->event_id]) }}" class="fs-3 fw-bold">{{ Str::limit($favorite->event->title, 30) }}</a>
               </div>
               <div class="col-12">
                 @if (!empty($favorite->user->username))
