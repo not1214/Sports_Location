@@ -1,35 +1,37 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-3 me-3 text-center">
+
+    <div class="col-md-3 me-3">
       @if(isset($user->profile_image))
-      <img src="{{ asset($user->profile_image) }}" class="profile-image">
+      <img src="{{ asset($user->profile_image) }}" class="col-10 offset-1 col-md-12 offset-md-0 profile-image">
       @else
-      <img src="{{ asset('images/no-image(user).jpg') }}" class="profile-image">
+      <img src="{{ asset('images/no-image(user).jpg') }}" class="col-10 offset-1 col-md-12 offset-md-0 profile-image">
       @endif
-      <h4 class="mt-3">{{ $user->username }}</h4>
+      <h4 class="mt-3 text-center">{{ $user->username }}</h4>
       @if($target == 'mine')
-      <a href="{{ route('user.edit') }}" class="col-10 btn btn-outline-secondary mt-5"><i class="fa-solid fa-user-pen"></i></a>
+      <a href="{{ route('user.edit') }}" class="col-8 offset-2 col-md-10 offset-md-1 btn btn-outline-secondary mt-3 text-center"><i class="fa-solid fa-user-pen"></i></a>
       @elseif($target == 'other')
         @if($follow)
-        <a href="{{ route('user.unFollow', ['username'=>$user->username]) }}" class="col-10 btn btn-primary mt-5"><i class="fa-solid fa-user-check"></i></a>
+        <a href="{{ route('user.unFollow', ['username'=>$user->username]) }}" class="col-8 offset-2 col-md-10 offset-md-1 btn btn-primary mt-3 text-center"><i class="fa-solid fa-user-check"></i></a>
         @else
-        <a href="{{ route('user.follow', ['username'=>$user->username]) }}" class="col-10 btn btn-outline-secondary mt-5"><i class="fa-solid fa-user-plus"></i></a>
+        <a href="{{ route('user.follow', ['username'=>$user->username]) }}" class="col-8 offset-2 col-md-10 offset-md-1 btn btn-outline-secondary mt-3 text-center"><i class="fa-solid fa-user-plus"></i></a>
         @endif
       @endif
     </div>
-    
+
     <div class="col-md-8">
-      <div class="row">
-        <div class="col-md-3 border-end">
-          <h5 class="text-center">フォロー</h5>
+      <div class="row mt-3 mt-md-0">
+        <div class="col-5 offset-1 col-md-3 offset-md-1 border-end">
+          <h5 class="text-center fw-bold">フォロー</h5>
           @if($target == 'mine')
           <p class="fs-4 text-center"><a href="{{ route('user.my_followings') }}">{{ count($followings) }}</a></p>
           @else
           <p class="fs-4 text-center"><a href="{{ route('user.followings', ['username'=>$user->username]) }}">{{ count($followings) }}</a></p>
           @endif
         </div>
-        <div class="col-md-3">
-          <h5 class="text-center">フォロワー</h5>
+
+        <div class="col-5 col-md-3">
+          <h5 class="text-center fw-bold">フォロワー</h5>
           @if($target == 'mine')
           <p class="fs-4 text-center"><a href="{{ route('user.my_followers') }}">{{ count($followers) }}</a></p>
           @else
@@ -37,15 +39,17 @@
           @endif
         </div>
       </div>
-      <div class="row mt-5">
-        <p class="introduction ps-md-5">{!! nl2br(e($user->introduction)) !!}</p>
+
+      <div class="row mt-3">
+        <p class="col-10 offset-1">{!! nl2br(e($user->introduction)) !!}</p>
       </div>
-      <div class="row mt-5 justify-content-center">
+
+      <div class="row mt-3 justify-content-center">
         @if($target == 'mine')
-        <a href="{{ route('user.createdEvents') }}" class="btn btn-info col-10 col-md-5 me-md-3">作成イベント一覧</a>
-        <a href="{{ route('user.favoriteEvents') }}" class="btn btn-info col-10 col-md-5 me-md-3 mt-2 mt-md-0">お気に入りイベント一覧</a>
-        <a href="{{ route('user.pastEvents') }}" class="btn btn-info col-10 col-md-5 me-md-3 mt-2">参加済みイベント一覧</a>
-        <a href="{{ route('user.reservedEvents') }}" class="btn btn-info col-10 col-md-5 me-md-3 mt-2">予約済みイベント一覧</a>
+        <a href="{{ route('user.createdEvents') }}" class="btn btn-info col-8 col-md-5 me-md-3">作成イベント一覧</a>
+        <a href="{{ route('user.favoriteEvents') }}" class="btn btn-info col-8 col-md-5 me-md-3 mt-2 mt-md-0">お気に入りイベント一覧</a>
+        <a href="{{ route('user.pastEvents') }}" class="btn btn-info col-8 col-md-5 me-md-3 mt-2">参加済みイベント一覧</a>
+        <a href="{{ route('user.reservedEvents') }}" class="btn btn-info col-8 col-md-5 me-md-3 mt-2">予約済みイベント一覧</a>
         @else
         <a href="{{ route('user.events', ['username'=>$user->username]) }}" class="btn btn-info col-10 col-md-5 me-md-3">作成イベント一覧</a>
         @endif

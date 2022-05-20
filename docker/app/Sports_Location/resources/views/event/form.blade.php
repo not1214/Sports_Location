@@ -10,29 +10,29 @@
     @csrf
 
     <div class="row mb-3">
-      <label for="image" class="col-md-4 col-form-label text-md-end">{{ __('Image') }}</label>
+      <label for="image" class="col-md-4 col-form-label text-md-end fw-bold">{{ __('Image') }}</label>
 
       <div class="col-md-6">
-          <input id="image" type="file" class="form-control" name="image">
+        <input id="image" type="file" class="form-control" name="image">
       </div>
       @error('image')
-          <p class="col-md-6 offset-md-4 text-danger">{{ $message }}</p>
+        <p class="col-md-6 offset-md-4 text-danger">{{ $message }}</p>
       @enderror
     </div>
 
     <div class="row mb-3">
-      <label for="title" class="col-md-4 col-form-label text-md-end">{{ __('Title') }}</label>
+      <label for="title" class="col-md-4 col-form-label text-md-end fw-bold">{{ __('Title') }}</label>
 
       <div class="col-md-6">
-          <input id="title" type="text" class="form-control" name="title" value="{{ old('title', $event->title) }}">
+        <input id="title" type="text" class="form-control" name="title" value="{{ old('title', $event->title) }}">
       </div>
       @error('title')
-          <p class="col-md-6 offset-md-4 text-danger">{{ $message }}</p>
+        <p class="col-md-6 offset-md-4 text-danger">{{ $message }}</p>
       @enderror
     </div>
 
     <div class="row mb-3">
-      <label for="genre" class="col-md-4 col-form-label text-md-end">{{ __('Genre') }}</label>
+      <label for="genre" class="col-md-4 col-form-label text-md-end fw-bold">{{ __('Genre') }}</label>
 
       <div class="col-md-4">
         <select id="genre" class="form-select" name="genre">
@@ -48,7 +48,7 @@
     </div>
 
     <div class="row mb-3">
-      <label for="area" class="col-md-4 col-form-label text-md-end">{{ __('Area') }}</label>
+      <label for="area" class="col-md-4 col-form-label text-md-end fw-bold">{{ __('Area') }}</label>
 
       <div class="col-md-4">
         <select id="area" class="form-select" name="area">
@@ -64,7 +64,7 @@
     </div>
 
     <div class="row mb-3">
-      <label for="location" class="col-md-4 col-form-label text-md-end">{{ __('Location') }}</label>
+      <label for="location" class="col-md-4 col-form-label text-md-end fw-bold">{{ __('Location') }}</label>
 
       <div class="col-md-6">
         <input id="location" type="text" class="form-control" name="location" value="{{ old('location', $event->location) }}">
@@ -75,7 +75,7 @@
     </div>
 
     <div class="row mb-3">
-      <label for="date" class="col-md-4 col-form-label text-md-end">{{ __('Date') }}</label>
+      <label for="date" class="col-md-4 col-form-label text-md-end fw-bold">{{ __('Date') }}</label>
 
       <div class="col-md-4">
         <input id="date" type="date" class="form-control" name="date" value="{{ old('date', $event->date) }}">
@@ -86,7 +86,7 @@
     </div>
 
     <div class="row mb-3">
-      <label for="start_time" class="col-md-4 col-form-label text-md-end">{{ __('Start_time') }}</label>
+      <label for="start_time" class="col-md-4 col-form-label text-md-end fw-bold">{{ __('Start_time') }}</label>
 
       <div class="col-md-4">
         <input id="start_time" type="time" class="form-control" name="start_time" value="{{ old('start_time', $event->start_time) }}">
@@ -97,7 +97,7 @@
     </div>
 
     <div class="row mb-3">
-      <label for="end_time" class="col-md-4 col-form-label text-md-end">{{ __('End_time') }}</label>
+      <label for="end_time" class="col-md-4 col-form-label text-md-end fw-bold">{{ __('End_time') }}</label>
 
       <div class="col-md-4">
         <input id="end_time" type="time" class="form-control" name="end_time" value="{{ old('end_time', $event->end_time) }}">
@@ -108,7 +108,7 @@
     </div>
 
     <div class="row mb-3">
-      <label for="contents" class="col-md-4 col-form-label text-md-end">{{ __('Contents') }}</label>
+      <label for="contents" class="col-md-4 col-form-label text-md-end fw-bold">{{ __('Contents') }}</label>
 
       <div class="col-md-6">
         <textarea id="contents" class="form-control" name="contents">{{ old('contents', $event->contents) }}</textarea>
@@ -119,7 +119,7 @@
     </div>
 
     <div class="row mb-3">
-      <label for="condition" class="col-md-4 col-form-label text-md-end">{{ __('Condition') }}</label>
+      <label for="condition" class="col-md-4 col-form-label text-md-end fw-bold">{{ __('Condition') }}</label>
 
       <div class="col-md-6">
         <textarea id="condition" class="form-control" name="condition">{{ old('condition', $event->condition) }}</textarea>
@@ -130,7 +130,7 @@
     </div>
 
     <div class="row mb-3">
-      <label for="stuff" class="col-md-4 col-form-label text-md-end">{{ __('Stuff') }}</label>
+      <label for="stuff" class="col-md-4 col-form-label text-md-end fw-bold">{{ __('Stuff') }}</label>
 
       <div class="col-md-6">
         <textarea id="stuff" class="form-control" name="stuff">{{ old('stuff', $event->stuff) }}</textarea>
@@ -141,7 +141,7 @@
     </div>
 
     <div class="row mb-3">
-      <label for="attention" class="col-md-4 col-form-label text-md-end">{{ __('Attention') }}</label>
+      <label for="attention" class="col-md-4 col-form-label text-md-end fw-bold">{{ __('Attention') }}</label>
 
       <div class="col-md-6">
         <textarea id="attention" class="form-control" name="attention">{{ old('attention', $event->attention) }}</textarea>
@@ -152,7 +152,7 @@
     </div>
 
     <div class="row mb-3">
-      <label for="number" class="col-md-4 col-form-label text-md-end">{{ __('Number') }}</label>
+      <label for="number" class="col-md-4 col-form-label text-md-end fw-bold">{{ __('Number') }}</label>
 
       <div class="col-md-4">
         <input id="number" type="number" class="form-control" name="number" min="1" value="{{ old('number', $event->number) }}">
@@ -163,7 +163,7 @@
     </div>
 
     <div class="row mb-3">
-      <label for="deadline" class="col-md-4 col-form-label text-md-end">{{ __('Deadline') }}</label>
+      <label for="deadline" class="col-md-4 col-form-label text-md-end fw-bold">{{ __('Deadline') }}</label>
 
       <div class="col-md-4">
         <input id="deadline" type="datetime-local" class="form-control" name="deadline" value="{{ old('deadline', str_replace(" ", "T", $event->deadline)) }}">
@@ -177,7 +177,7 @@
       <input id="status" name="status" type="hidden" value="1">
     @elseif($target == 'update')
       <div class="row mb-3">
-        <label for="status" class="col-md-4 col-form-label text-md-end">{{ __('Status') }}</label>
+        <label for="status" class="col-md-4 col-form-label text-md-end fw-bold">{{ __('Status') }}</label>
 
         <div class="col-md-6 d-flex align-items-center">
           <input id="status" type="radio" name="status" value="1" {{ old('status', $event->status) == '1' ? 'checked' : '' }}>募集中　　
@@ -186,11 +186,15 @@
       </div>
     @endif
 
-    <div class="row mb-2 justify-content-center">
+    <div class="row justify-content-center">
       <button type="submit" name="confirm" class="col-8 col-md-3 col-lg-2 me-md-2 btn btn-primary">
         {{ __('Confirm') }}
       </button>
+      @if($target == 'confirm')
       <a href="/events" class="col-8 col-md-3 col-lg-2 mt-2 mt-md-0 btn btn-danger">イベント一覧へ戻る</a>
+      @elseif($target == 'update')
+      <a href="{{ route('events.show', ['event'=>$event->id]) }}" class="col-8 col-md-3 col-lg-2 mt-2 mt-md-0 btn btn-danger">イベント詳細へ戻る</a>
+      @endif
     </div>
   </form>
 

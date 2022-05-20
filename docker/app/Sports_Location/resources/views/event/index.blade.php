@@ -5,7 +5,6 @@
   <div class="row">
 
     <div class="col-md-3 order-2 order-md-1">
-
       <div class="row mb-5 justify-content-center">
         <a href="{{ route('events.create') }}" class="btn btn-info col-8 col-md-auto">イベントを作成する</a>
       </div>
@@ -14,6 +13,7 @@
         <div class="col-10 col-md-12 text-center border-top border-end border-start border-dark p-1">
           <div class="p-1">ジャンル</div>
         </div>
+
         <div class="col-10 col-md-12 border border-dark p-3">
           <ul class="list-unstyled">
             @foreach($genres as $genre)
@@ -22,11 +22,9 @@
           </ul>
         </div>
       </div>
-
     </div>
 
     <div class="col-10 offset-1 col-md-8 offset-md-0 ms-md-5 order-1 order-md-2">
-
       <div class="row mb-3">
         <h3>イベントを探す</h3>
       </div>

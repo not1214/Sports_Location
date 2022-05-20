@@ -73,14 +73,16 @@ class UserController extends Controller
         $user = Auth::user();
         $events = Event::Join('reservations', 'events.id', '=', 'reservations.event_id')
                   ->where([['reservations.user_id', $user->id], ['permission', '2'], ['date', '<', Carbon::today()]])
-                  ->latest()->paginate(10);
+                  ->orderBy('events.date', 'desc')->paginate(10);
         return view('user.pastEvents', compact('user', 'events'));
     }
 
     public function reservedEvents()
     {
         $user = Auth::user();
-        $reservations = Reservation::whereUserId($user->id)->latest()->paginate(10);
+        $reservations = Event::Join('reservations', 'events.id', '=', 'reservations.event_id')
+                        ->where([['reservations.user_id', $user->id], ['events.date', '>=', Carbon::today()], ['events.end_time', '>', Carbon::now()]])
+                        ->orderBy('events.date', 'desc')->paginate(10);
         return view('user.reservations', compact('user', 'reservations'));
     }
 
@@ -94,14 +96,14 @@ class UserController extends Controller
     public function myFollowings()
     {
         $user = Auth::user();
-        $followings = $user->following()->latest();
+        $followings = $user->following()->orderBy('username', 'asc')->get();
         return view('user.following', compact('user', 'followings'));
     }
 
     public function myFollowers()
     {
         $user = Auth::user();
-        $followers = $user->followed()->latest();
+        $followers = $user->followed()->orderBy('username', 'asc')->get();
         return view('user.follower', compact('user', 'followers'));
     }
 
@@ -156,7 +158,7 @@ class UserController extends Controller
     public function followings($username)
     {
         $user = User::whereUsername($username)->firstOrFail();
-        $followings = $user->following()->latest();
+        $followings = $user->following()->orderBy('username', 'asc')->get();
         $follow = Relationship::where([['following_id', Auth::user()->id], ['followed_id', $user->id]])->first();
         return view('user.following', compact('user', 'followings', 'follow'));
     }
@@ -164,7 +166,7 @@ class UserController extends Controller
     public function followers($username)
     {
         $user = User::whereUsername($username)->firstOrFail();
-        $followers = $user->followed()->latest();
+        $followers = $user->followed()->orderBy('username', 'asc')->get();
         $follow = Relationship::where([['following_id', Auth::user()->id], ['followed_id', $user->id]])->first();
         return view('user.follower', compact('user', 'followers', 'follow'));
     }

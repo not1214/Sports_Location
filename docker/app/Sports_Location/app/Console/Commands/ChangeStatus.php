@@ -46,8 +46,7 @@ class ChangeStatus extends Command
 
         $events = Event::all();
         foreach ($events as $event) {
-            $number = Reservation::where('event_id', $event->id)->count();
-            if ($event->deadline < Carbon::now() || $event->number <= $number) {
+            if ($event->deadline < Carbon::now()) {
                 $event->status = 0;
                 $event->save();
             }

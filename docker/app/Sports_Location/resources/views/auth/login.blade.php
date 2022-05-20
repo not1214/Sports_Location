@@ -53,16 +53,22 @@
 
                         <div class="row mb-2">
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
+                                <div class="row">
+                                    <div class="col-5 col-lg-3">
+                                        <button type="submit" class="btn btn-primary">
+                                            {{ __('Login') }}
+                                        </button>
+                                    </div>
 
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                                <p class="offset-3">会員登録は<a href="{{ route('register') }}">こちら</a></p>
+                                    <div class="col-12 col-lg-9 mt-3 mt-lg-0">
+                                        @if (Route::has('password.request'))
+                                            <a class="text-nowrap" href="{{ route('password.request') }}">
+                                                {{ __('Forgot Your Password?') }}
+                                            </a>
+                                        @endif
+                                        <p class="mt-2">会員登録は<a href="{{ route('register') }}">こちら</a></p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </form>

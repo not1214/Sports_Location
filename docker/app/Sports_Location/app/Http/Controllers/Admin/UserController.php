@@ -58,14 +58,14 @@ class UserController extends Controller
     public function followings($username)
     {
         $user = User::where('username', $username)->firstOrFail();
-        $followings = $user->following()->latest();
+        $followings = $user->following()->orderBy('username', 'asc')->get();
         return view('admin.user.following', compact('user', 'followings'));
     }
 
     public function followers($username)
     {
         $user = User::where('username', $username)->firstOrFail();
-        $followers = $user->followed()->latest();
+        $followers = $user->followed()->orderBy('username', 'asc')->get();
         return view('admin.user.follower', compact('user', 'followers'));
     }
 
@@ -81,7 +81,7 @@ class UserController extends Controller
         $user = User::where('username', $username)->firstOrFail();
         $events = Event::Join('reservations', 'events.id', '=', 'reservations.event_id')
                   ->where([['reservations.user_id', $user->id], ['permission', '2'], ['date', '<', Carbon::today()]])
-                  ->latest()->paginate(10);
+                  ->orderBy('events.date', 'desc')->paginate(10);
         return view('admin.user.pastEvents', compact('user', 'events'));
     }
 

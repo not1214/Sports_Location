@@ -13,7 +13,7 @@ use App\Models\Event;
 use App\Models\Genre;
 use App\Models\Area;
 use App\Models\User;
-use App\Models\Favorite;
+use App\Models\Reservation;
 
 
 class EventController extends Controller
@@ -35,7 +35,7 @@ class EventController extends Controller
             $query->where('title', 'like', '%'. $keyword. '%');
         }
 
-        $events = $query->latest()->paginate(5);
+        $events = $query->latest()->paginate(10);
         $genres = Genre::all();
         $areas = Area::all();
         return view('admin/event/index', compact('events', 'genres', 'areas', 'genre_id', 'area_id', 'keyword'));
@@ -44,14 +44,15 @@ class EventController extends Controller
     public function show($id)
     {
         $event = Event::findOrFail($id);
-        return view('admin/event/show', compact('event'));
+        $number = Reservation::where([['event_id', $id], ['permission', '2']])->count();
+        return view('admin/event/show', compact('event', 'number'));
     }
 
     public function edit($id)
     {
         $event = Event::findOrFail($id);
-        if ($event->date < Carbon::today()) {
-            return redirect()->route('events.show', ['event'=>$event->id]);
+        if ($event->deadline < Carbon::now()) {
+            return redirect()->route('admin.events.show', ['event'=>$event->id]);
         }
         $areas = Area::all();
         $genres = Genre::all();
@@ -63,7 +64,7 @@ class EventController extends Controller
         if (empty($request)) {
             return redirect()->route('events.show', ['event' => $event->id]);
         }
-        
+
         $data = $request->except('image');
 
         if (!empty($request->image)) {
