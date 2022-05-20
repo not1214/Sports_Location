@@ -137,7 +137,8 @@ class EventController extends Controller
                          ->first();
         $reserved_check = Reservation::where([['event_id', $event->id], ['user_id', Auth::user()->id]])->first();
         $number = Reservation::where([['event_id', $id], ['permission', '2']])->count();
-        return view('event/show', compact('event', 'favorite', 'joined_event', 'reserved_check', 'number'));
+        $datetime = $event->date.' '.$event->end_time;
+        return view('event/show', compact('event', 'favorite', 'joined_event', 'reserved_check', 'number', 'datetime'));
     }
 
     /**

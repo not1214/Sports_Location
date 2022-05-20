@@ -41,7 +41,7 @@
       </div>
       <input name="genre" value="{{ $genre->id }}" type="hidden">
     </div>
-    
+
     <div class="row pb-3 mb-3">
       <label for="area" class="col-md-4 text-md-end fw-bold">{{ __('Area') }}</label>
 
