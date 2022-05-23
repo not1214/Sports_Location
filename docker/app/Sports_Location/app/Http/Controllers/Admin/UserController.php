@@ -19,7 +19,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::withTrashed()->latest()->paginate(10);
+        $users = User::withTrashed()->orderBy('username', 'asc')->paginate(10);
         return view('admin.user.index', compact('users'));
     }
 
@@ -79,7 +79,7 @@ class UserController extends Controller
     public function pastEvents($username)
     {
         $user = User::where('username', $username)->firstOrFail();
-        $events = Event::Join('reservations', 'events.id', '=', 'reservations.event_id')
+        $reservations = Reservation::Join('events', 'reservations.event_id', '=', 'events.id')
                   ->where([['reservations.user_id', $user->id], ['permission', '2'], ['date', '<', Carbon::today()]])
                   ->orderBy('events.date', 'desc')->paginate(10);
         return view('admin.user.pastEvents', compact('user', 'events'));
@@ -94,7 +94,6 @@ class UserController extends Controller
     {
         $user = User::where('username', $username)->firstOrFail();
         $user->delete();
-        Auth::logout();
-        return redirect('/');
+        return redirect('/admin/users');
     }
 }

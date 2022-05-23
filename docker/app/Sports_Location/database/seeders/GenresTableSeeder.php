@@ -23,7 +23,6 @@ class GenresTableSeeder extends Seeder
             ['id' => 4, 'genre_name' => 'バスケットボール'],
             ['id' => 5, 'genre_name' => 'テニス'],
             ['id' => 6, 'genre_name' => 'ゴルフ'],
-            ['id' => 7, 'genre_name' => 'その他'],
         ];
         foreach ($genres as $genre) {
             DB::table('genres')->insert($genre);

@@ -19,10 +19,10 @@
         <h3>参加済みイベント一覧</h3>
       </div>
 
-      @foreach ($events as $event)
+      @foreach ($reservations as $reservation)
       <div class="row mb-3">
-        @if(isset($event->event_image))
-        <img class="col-6 col-md-5 col-lg-3 order-1 img-fluid" src="{{ asset($event->event_image) }}" style="border-radius:30%;max-height:120px;">
+        @if(isset($reservation->event->event_image))
+        <img class="col-6 col-md-5 col-lg-3 order-1 img-fluid" src="{{ asset($reservation->event->event_image) }}" style="border-radius:30%;max-height:120px;">
         @else
         <img class="col-6 col-md-5 col-lg-3 order-1 img-fluid" src="{{ asset('images/no-image.png') }}" style="border-radius:30%;max-height:120px;">
         @endif
@@ -33,23 +33,23 @@
 
         <div class="col-10 col-md-12 col-lg-6 order-3 order-lg-2">
           <div class="col-12">
-            <a href="{{ route('events.show', ['event'=>$event->id]) }}" class="fs-3 fw-bold">{{ Str::limit($event->title, 30) }}</a>
+            <a href="{{ route('events.show', ['event'=>$reservation->event->id]) }}" class="fs-3 fw-bold">{{ Str::limit($reservation->event->title, 30) }}</a>
           </div>
 
           <div class="col-12">
-            @if (!empty($event->user->username))
-            開催者：<span><a href="{{ route('user.show', ['username'=>$user->username]) }}">{{ $event->user->username }}</a></span>
+            @if (!empty($reservation->event->user->username))
+            開催者：<span><a href="{{ route('user.show', ['username'=>$reservation->event->user->username]) }}">{{ $reservation->event->user->username }}</a></span>
             @else
             開催者：<span>退会済みユーザー</a></span>
             @endif
           </div>
 
           <div class="col-12">
-            エリア：<span><a href="{{ route('area.show', ['area_id'=>$event->area->id]) }}">{{ $event->area->name }}</a></span>
+            エリア：<span><a href="{{ route('area.show', ['area_id'=>$reservation->event->area->id]) }}">{{ $reservation->event->area->name }}</a></span>
           </div>
 
           <div class="col-12">
-            ジャンル：<span><a href="{{ route('genre.show', ['genre_id'=>$event->genre->id]) }}">{{ $event->genre->genre_name }}</a></span>
+            ジャンル：<span><a href="{{ route('genre.show', ['genre_id'=>$reservation->event->genre->id]) }}">{{ $reservation->event->genre->genre_name }}</a></span>
           </div>
         </div>
 
@@ -57,7 +57,7 @@
       @endforeach
 
       <div class="row mb-3">
-        <div class="d-flex justify-content-center">{{ $events->links() }}</div>
+        <div class="d-flex justify-content-center">{{ $reservations->links() }}</div>
       </div>
     </div>
 

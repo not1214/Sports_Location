@@ -62,10 +62,10 @@
       </div>
       
       <div class="row mb-3">
-        <div class="col-10 offset-1 col-md-5 offset-md-0">
+        <div class="col-10 offset-1 col-md-8 offset-md-0">
           <label class="fw-bold">ステータス：</label>
           @if($reservation->permission == "1")
-          <p>未承認　※開催者の回答をお待ちください。</p>
+          <p>未承認<br>※開催者の回答をお待ちください。</p>
           @else
           <p>{!! nl2br(e($reservation->permission_text)) !!}</p>
           @endif

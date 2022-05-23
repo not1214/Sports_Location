@@ -187,6 +187,7 @@ return [
             'username' => 'ユーザーネーム',
             'introduction' => '紹介文',
             'name' => 'お名前',
+            'kana' => 'フリガナ',
             'email' => 'メールアドレス',
             'subject' => '件名',
             'body' => 'お問い合わせ内容',
@@ -194,6 +195,7 @@ return [
             'password' => 'パスワード',
             'birthday' => '生年月日',
             'tel' => '電話番号',
+            'comment' => 'コメント',
     ],
 
     'values' => [

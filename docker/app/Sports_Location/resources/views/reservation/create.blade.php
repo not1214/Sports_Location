@@ -50,7 +50,7 @@
         <div class="row mb-5">
           <label for="comment" class="col-10 offset-1 col-md-11 offset-md-0 fw-bold">コメント</label>
           <div class="col-10 offset-1 col-md-11 offset-md-0">
-          <textarea id="comment" name="comment" class="form-control"></textarea>
+          <textarea id="comment" name="comment" class="form-control">{{ old('comment') }}</textarea>
             @error('comment')
               <p class="text-danger">{{ $message }}</p>
             @enderror
