@@ -9,7 +9,7 @@
         @if(isset($event->event_image))
         <img src="{{ asset($event->event_image) }}" class="col-10 offset-1 col-md-8 offset-md-2 event_image">
         @else
-        <img src="{{ asset('images/no-image.jpg') }}" class="col-10 offset-1 col-md-8 offset-md-2 event_image">
+        <img src="{{ asset('images/no-image.png') }}" class="col-10 offset-1 col-md-8 offset-md-2 event_image">
         @endif
         <h4 class="col-10 offset-1 col-md-12 offset-md-0 mt-3"><a href="{{ route('events.show', ['event'=>$event->id]) }}">{{ $event->title }}</a></h4>
       </div>

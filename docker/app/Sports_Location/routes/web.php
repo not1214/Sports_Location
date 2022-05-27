@@ -70,6 +70,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('events/{event}/favorite', 'App\Http\Controllers\EventController@favorite')->name('event.favorite');
     Route::get('events/{event}/unfavorite', 'App\Http\Controllers\EventController@unfavorite')->name('event.unfavorite');
 
+    Route::resource('events.reviews', 'App\Http\Controllers\ReviewController');
+
     Route::get('myPage', 'App\Http\Controllers\UserController@myPage')->name('user.myPage');
     Route::get('myPage/edit', 'App\Http\Controllers\UserController@edit')->name('user.edit');
     Route::put('myPage', 'App\Http\Controllers\UserController@update')->name('user.update');
