@@ -88,7 +88,7 @@ class EventController extends Controller
             return redirect()->route('events.create')->withInput();
         }
 
-        $event = new Event;
+        $event = new Event();
         $data = $request->session()->get('data');
         if (!empty($request->image)) {
             $temp_path = $data['temp_path'];

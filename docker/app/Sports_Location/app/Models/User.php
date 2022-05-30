@@ -84,6 +84,11 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'relationships', 'following_id', 'followed_id');
     }
 
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'user_id', 'id');
+    }
+
     public function getFormattedBirthdayAttribute()
     {
         return Carbon::createFromFormat('Y-m-d', $this->attributes['birthday'])->format('Y年m月d日');

@@ -54,6 +54,11 @@ class Event extends Model
         return $this->hasMany(Reservation::class, 'event_id', 'id');
     }
 
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'event_id', 'id');
+    }
+
     public function getFormattedDeadlineAttribute()
     {
         return Carbon::createFromFormat('Y-m-d H:i:s', $this->attributes['deadline'])->format('Y年m月d日 H時i分');

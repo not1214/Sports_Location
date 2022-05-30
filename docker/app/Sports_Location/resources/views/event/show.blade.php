@@ -31,8 +31,8 @@
         <a href="{{ route('events.reservations.index', ['event'=>$event->id]) }}" class="col-8 offset-2 col-md-5 offset-md-0 mb-2 mb-md-0 btn btn-success">予約申請一覧</a>
         <a href="/events/{{ $event->id }}/edit" class="col-8 offset-2 col-md-5 ms-md-2 btn btn-primary @if($event->deadline < Carbon\Carbon::now()) disabled @endif">編集する</a>
       @else
-        @if($datetime < Carbon\Carbon::now() && !empty($joined_event))
-        <a href="#" class="col-md-3 btn btn-primary">レビューする</a>
+        @if($datetime < Carbon\Carbon::now())
+        <a href="{{ route('events.reviews.index', ['event'=>$event->id]) }}" class="col-md-3 btn btn-primary">レビュー一覧</a>
         @else
         <a href="{{ route('events.reservations.create', ['event'=>$event->id]) }}" class="col-8 offset-2 col-md-5 offset-md-0 mb-2 mb-md-0 btn btn-primary @if($event->status == '0' || empty($event->user->username) || $event->deadline < \Carbon\Carbon::now() || !empty($reserved_check)) || $event->number <= $number disabled @endif">応募する</a>
           @if($favorite)
