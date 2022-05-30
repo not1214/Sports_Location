@@ -34,7 +34,7 @@
         @if($datetime < Carbon\Carbon::now())
         <a href="{{ route('events.reviews.index', ['event'=>$event->id]) }}" class="col-md-3 btn btn-primary">レビュー一覧</a>
         @else
-        <a href="{{ route('events.reservations.create', ['event'=>$event->id]) }}" class="col-8 offset-2 col-md-5 offset-md-0 mb-2 mb-md-0 btn btn-primary @if($event->status == '0' || empty($event->user->username) || $event->deadline < \Carbon\Carbon::now() || !empty($reserved_check)) || $event->number <= $number disabled @endif">応募する</a>
+        <a href="{{ route('events.reservations.create', ['event'=>$event->id]) }}" class="col-8 offset-2 col-md-5 offset-md-0 mb-2 mb-md-0 btn btn-primary @if($event->status == '0' || empty($event->user->username) || $event->deadline < \Carbon\Carbon::now() || !empty($reserved_check) || $event->number <= $number) disabled @endif">応募する</a>
           @if($favorite)
           <a href="{{ route('event.unfavorite', ['event' => $event->id ]) }}" class="col-8 offset-2 col-md-5 ms-md-2 btn btn-warning"><i class="fa-solid fa-star"></i></a>
           @else
