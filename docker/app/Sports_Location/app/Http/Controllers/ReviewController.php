@@ -19,7 +19,8 @@ class ReviewController extends Controller
         $joined_event = DB::table('events')->join('reservations', 'events.id', '=', 'reservations.event_id')
                         ->where([['reservations.user_id', Auth::user()->id], ['permission', '2'], ['event_id', '=', $event->id]])
                         ->first();
-        return view('review/index', compact('reviews', 'event', 'joined_event'));
+        $review_check = Review::where([['user_id', Auth::user()->id], ['event_id', $event->id]])->first();
+        return view('review/index', compact('reviews', 'event', 'joined_event', 'review_check'));
     }
 
     public function create(Event $event)
@@ -33,7 +34,8 @@ class ReviewController extends Controller
         if (empty($joined_event)) {
             return redirect()->route('events.reviews.index', ['event' => $event->id]);
         }
-        return view('review/create', compact('event', 'joined_event'));
+        $review = new Review();
+        return view('review/create', compact('event', 'review', 'joined_event'));
     }
 
     public function store(Event $event, Request $request)
@@ -55,29 +57,23 @@ class ReviewController extends Controller
         $review->comment = $request->comment;
         $review->save();
 
-        return redirect()->route('events.reviews.show', ['event' => $event->id, 'review' => $review->id]);
-    }
-
-    public function show(Event $event, Review $review)
-    {
-        $review = Review::findOrFail($review->id);
-        return view('review/show', compact('event', 'review'));
+        return redirect()->route('events.reviews.index', ['event' => $event->id]);
     }
 
     public function edit(Event $event, Review $review)
     {
         if ($review->user_id != Auth::user()->id) {
-            return redirect()->route('events.reviews.show');
+            return redirect()->route('events.reviews.index');
         }
 
         $review = Review::findOrFail($review->id);
-        return view('review/show', compact('event', 'review'));
+        return view('review/edit', compact('event', 'review'));
     }
 
     public function update(Event $event, Review $review, Request $request)
     {
         if ($review->user_id != Auth::user()->id) {
-            return redirect()->route('events.reviews.show');
+            return redirect()->route('events.reviews.index', ['event' => $event->id]);
         }
 
         $review = Review::findOrFail($review->id);
@@ -85,13 +81,13 @@ class ReviewController extends Controller
         $review->comment = $request->comment;
         $review->save();
 
-        return redirect()->route('events.reviews.show', ['event' => $event->id, 'review' => $review->id]);
+        return redirect()->route('events.reviews.index', ['event' => $event->id]);
     }
 
     public function destroy(Event $event, Review $review)
     {
         if ($review->user_id != Auth::user()->id) {
-            return redirect()->route('events.reviews.show');
+            return redirect()->route('events.reviews.index', ['event' => $event->id]);
         }
 
         $review = Review::findOrFail($review->id);

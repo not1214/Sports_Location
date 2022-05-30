@@ -40,7 +40,7 @@
       </div>
 
       <div class="row mb-3">
-        <a href="{{ route('events.reviews.create', ['event'=>$event->id]) }}" class="col-8 offset-2 btn btn-primary @if(empty($joined_event)) disabled @endif">レビューを投稿</a>
+        <a href="{{ route('events.reviews.create', ['event'=>$event->id]) }}" class="col-8 offset-2 btn btn-primary @if(empty($joined_event) || !empty($review_check)) disabled @endif">レビューを投稿</a>
       </div>
     </div>
 
@@ -51,13 +51,20 @@
 
       @foreach($reviews as $review)
       <div class="row mb-3 pb-1" style="background-color:#FFFFBB;">
-        <div class="col-9">
-          <div>{{ $review->comment }}</div>
+        <div class="col-8">
           <div class="rating" data-rate="{{ $review->score }}"></div>
+          <div>{!! nl2br(e($review->comment)) !!}</div>
         </div>
-        <div class="col-3 align-item-center">
-          <a href="{{ route('events.reviews.show', ['event'=>$event->id, 'review'=>$review->id]) }}" class="btn btn-primary">詳細</a>
+        @if($review->user_id == Auth::user()->id)
+        <div class="col-4 d-inline-flex mb-auto mt-2 justify-content-end">
+          <a href="{{ route('events.reviews.edit', ['event'=>$event->id, 'review'=>$review->id]) }}" class="btn btn-sm btn-primary">編集</a>
+          <form action="{{ route('events.reviews.destroy', ['event'=>$event->id, 'review'=>$review->id]) }}" method="post">
+            @method('delete')
+            @csrf
+            <button onclick='return confirm("レビューを削除しますか？");' class="btn btn-sm btn-danger ms-1">削除</button>
+          </form>
         </div>
+        @endif
       </div>
       @endforeach
 
