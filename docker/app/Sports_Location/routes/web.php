@@ -67,8 +67,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('events/create/confirm', function () { abort(404); });
     Route::post('events/{event}/edit/confirm', [\App\Http\Controllers\EventController::class, 'editConfirm'])->name('events.edit_confirm');
     Route::get('events/{event}/edit/confirm', function () { abort(404); });
-    Route::get('events/{event}/favorite', 'App\Http\Controllers\EventController@favorite')->name('event.favorite');
-    Route::get('events/{event}/unfavorite', 'App\Http\Controllers\EventController@unfavorite')->name('event.unfavorite');
+    Route::post('events/{event}/favorite', 'App\Http\Controllers\EventController@favorite')->name('event.favorite');
 
     Route::resource('events.reviews', 'App\Http\Controllers\ReviewController', ['except' => ['show']]);
 

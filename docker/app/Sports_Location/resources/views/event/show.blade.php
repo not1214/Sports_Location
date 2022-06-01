@@ -2,6 +2,8 @@
 
 @section('content')
 
+<script src="{{ asset('/js/favorite.js') }}"></script>
+
 <div class="container">
 
   @if($event->status == '0' || empty($event->user->username) || $event->deadline < \Carbon\Carbon::now() || $event->number <= $number)
@@ -35,10 +37,10 @@
         <a href="{{ route('events.reviews.index', ['event'=>$event->id]) }}" class="col-md-3 btn btn-primary">レビュー一覧</a>
         @else
         <a href="{{ route('events.reservations.create', ['event'=>$event->id]) }}" class="col-8 offset-2 col-md-5 offset-md-0 mb-2 mb-md-0 btn btn-primary @if($event->status == '0' || empty($event->user->username) || $event->deadline < \Carbon\Carbon::now() || !empty($reserved_check)) || $event->number <= $number disabled @endif">応募する</a>
-          @if($favorite)
-          <a href="{{ route('event.unfavorite', ['event' => $event->id ]) }}" class="col-8 offset-2 col-md-5 ms-md-2 btn btn-warning"><i class="fa-solid fa-star"></i></a>
+          @if (!$event->isFavoriteBy(Auth::user()))
+          <a href="" class="favorite-toggle col-8 offset-2 col-md-5 ms-md-2 btn btn-warning" data-event-id="{{ $event->id }}"><i class="fa-regular fa-star"></i></a>
           @else
-          <a href="{{ route('event.favorite', ['event' => $event->id ]) }}" class="col-8 offset-2 col-md-5 ms-md-2 btn btn-warning"><i class="fa-regular fa-star"></i></a>
+          <a href="" class="favorite-toggle favorite col-8 offset-2 col-md-5 ms-md-2 btn btn-warning" data-event-id="{{ $event->id }}"><i class="fa-solid fa-star"></i></a>
           @endif
         @endif
       @endif

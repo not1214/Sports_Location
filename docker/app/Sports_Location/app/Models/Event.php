@@ -49,6 +49,11 @@ class Event extends Model
         return $this->hasMany(Favorite::class, 'event_id', 'id');
     }
 
+    public function isFavoriteBy($user): bool
+    {
+        return Favorite::where('user_id', $user->id)->where('event_id', $this->id)->first() !== null;
+    }
+
     public function reservations()
     {
         return $this->hasMany(Reservation::class, 'event_id', 'id');

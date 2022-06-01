@@ -231,20 +231,21 @@ class EventController extends Controller
         return redirect()->route('events.show', [$event->id]);
     }
 
-    public function favorite($id)
+    public function favorite(Request $request)
     {
-        $favorite = new Favorite();
-        $favorite->event_id = $id;
-        $favorite->user_id = Auth::user()->id;
-        $favorite->save();
-        return back();
-    }
+        $user_id = Auth::user()->id;
+        $event_id = $request->event_id;
+        $already_favorite = Favorite::where('user_id', $user_id)->where('event_id', $event_id)->first(); //3.
 
-    public function unfavorite($id)
-    {
-        $user = Auth::user()->id;
-        $favorite = Favorite::where([['event_id', $id], ['user_id', $user]])->first();
-        $favorite->delete();
-        return back();
+        if (!$already_favorite) { //もしこのユーザーがこの投稿にまだいいねしてなかったら
+            $favorite = new Favorite; //4.Likeクラスのインスタンスを作成
+            $favorite->event_id = $event_id; //Likeインスタンスにreview_id,user_idをセット
+            $favorite->user_id = $user_id;
+            $favorite->save();
+        } else { //もしこのユーザーがこの投稿に既にいいねしてたらdelete
+            Favorite::where('event_id', $event_id)->where('user_id', $user_id)->delete();
+        }
+
+        return response()->json();
     }
 }
